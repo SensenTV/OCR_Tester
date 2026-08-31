@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/OCR_Tester.Tests/OCR_Tester.Tests.csproj" />
+  </Folder>
   <Project Path="OCR_Tester.csproj" Id="1a1dcbed-057f-4ac9-bf77-dc63750388f9" />
 </Solution>

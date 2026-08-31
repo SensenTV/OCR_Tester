@@ -43,11 +43,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ComparisonRunner.cs" />
+    <Compile Include="Application\ComparisonService.cs" />
+    <Compile Include="ConsoleUI\ComparisonMenu.cs" />
+    <Compile Include="ConsoleUI\ConsoleFormatter.cs" />
+    <Compile Include="ConsoleUI\MainMenu.cs" />
+    <Compile Include="Domain\Interfaces\IEvaluationService.cs" />
+    <Compile Include="Domain\Interfaces\IGroundTruthReader.cs" />
+    <Compile Include="Domain\Interfaces\IOcrEngine.cs" />
+    <Compile Include="Domain\Interfaces\IResultWriter.cs" />
+    <Compile Include="Domain\Models\BenchmarkSummary.cs" />
+    <Compile Include="Domain\Models\ComparisonResult.cs" />
+    <Compile Include="Domain\Models\GroundTruth.cs" />
+    <Compile Include="Domain\Models\ImageTestCase.cs" />
+    <Compile Include="Domain\Models\OcrResult.cs" />
+    <Compile Include="Evaluation\CerCalculator.cs" />
+    <Compile Include="Evaluation\ResultEvaluator.cs" />
+    <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
+    <Compile Include="Infrastructure\Hardware\HardwareInfo.cs" />
+    <Compile Include="Infrastructure\Timing\BenchmarkTimer.cs" />
+    <Compile Include="Input\GroundTruth\JsonGroundTruthReader.cs" />
+    <Compile Include="Input\ImageLoader.cs" />
+    <Compile Include="OCR\GLM\GlmOcrEngine.cs" />
+    <Compile Include="OCR\Teseract\TesseractOcrEngine.cs" />
+    <Compile Include="Output\JsonResultWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Configuration\appsettings.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
