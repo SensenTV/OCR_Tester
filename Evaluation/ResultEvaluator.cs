@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Evaluation
 {
-    internal class ResultEvaluator
+    // Bewertet OCR-Ergebnisse anhand der zugehörigen Ground Truth.
+    // Berechnet und aggregiert Kennzahlen wie Edit Distance und CER.
+    public class ResultEvaluator
     {
     }
 }

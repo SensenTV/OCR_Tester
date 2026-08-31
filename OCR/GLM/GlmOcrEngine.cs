@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.OCR.GLM
 {
-    internal class GlmOcrEngine
+    // Implementiert die Kommunikation mit dem auf dem KI-PC betriebenen
+    // GLM-OCR-Modell über eine OpenAI-kompatible API.
+    public class GlmOcrEngine
     {
     }
 }

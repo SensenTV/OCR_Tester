@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Evaluation
 {
-    internal class CerCalculator
+    // Berechnet die Character Error Rate (CER) zwischen einem erwarteten
+    // Ground-Truth-Text und einem von einem OCR-Modell erkannten Text.
+    // Die Berechnung basiert auf der Levenshtein-Edit-Distance.
+    public class CerCalculator
     {
     }
 }

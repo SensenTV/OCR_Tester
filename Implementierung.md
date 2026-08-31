@@ -214,13 +214,11 @@ OCR_Tester/
 │       ├── Input/
 │       │   ├── GroundTruth/
 │       │   │   ├── JsonGroundTruthReader.cs
-│       │   │   └── CsvGroundTruthReader.cs
 │       │   │
 │       │   └── ImageLoader.cs
 │       │
 │       ├── Output/
 │       │   ├── JsonResultWriter.cs
-│       │   └── CsvResultWriter.cs
 │       │
 │       ├── Infrastructure/
 │       │   ├── Configuration/

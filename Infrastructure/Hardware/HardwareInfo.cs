@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Infrastructure.Hardware
 {
-    internal class HardwareInfo
+    // Repräsentiert die für den Benchmark dokumentierten Hardwareinformationen
+    // der verwendeten Systeme. Die Angaben werden nicht automatisch ermittelt,
+    // sondern aus der Konfiguration übernommen.
+    public class HardwareInfo
     {
     }
 }

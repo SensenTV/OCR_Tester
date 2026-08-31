@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Output
 {
-    internal class JsonResultWriter
+    // Schreibt die vollständigen Benchmark- und Vergleichsergebnisse
+    // in eine strukturierte JSON-Ergebnisdatei.
+    public class JsonResultWriter
     {
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Infrastructure.Configuration
 {
-    internal class AppSettings
+    // Enthält die Konfigurationsmodelle der Anwendung und bildet
+    // die Einstellungen aus der appsettings.json ab.
+    public class AppSettings
     {
     }
 }

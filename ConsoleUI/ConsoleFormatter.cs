@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.ConsoleUI
 {
-    internal class ConsoleFormatter
+    // Stellt Hilfsmethoden zur einheitlichen und übersichtlichen Formatierung
+    // von Ausgaben in der Konsole bereit.
+    public class ConsoleFormatter
     {
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.ConsoleUI
 {
-    internal class ComparisonMenu
+    // Stellt die Benutzerinteraktion für die Durchführung eines
+    // OCR-Vergleichsdurchlaufs bereit.
+    public   class ComparisonMenu
     {
     }
 }

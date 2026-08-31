@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.Input
 {
-    internal class ImageLoader
+    // Sucht und lädt die für den OCR-Vergleich vorgesehenen BMP-Bilder
+    // aus einem vom Benutzer angegebenen Verzeichnis.
+    public class ImageLoader
     {
     }
 }

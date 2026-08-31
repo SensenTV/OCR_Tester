@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OCR_Tester.ConsoleUI
 {
-    internal class MainMenu
+    // Stellt das Hauptmenü der Konsolenanwendung dar und verarbeitet
+    // die Auswahl des Benutzers.
+    public class MainMenu
     {
     }
 }
