@@ -1,6 +1,6 @@
 ﻿namespace OCR_Tester.Tests;
 
-public class CerCalculatorTests
+public class GroundTruthReaderTests
 {
 
     [Fact]
