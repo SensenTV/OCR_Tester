@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace OCR_Tester
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            var _MainMenu = new ConsoleUI.MainMenu();
+            _MainMenu.ShowAsync().Wait();
         }
     }
 }

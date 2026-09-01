@@ -7,3 +7,8 @@ Das hier ist mein Programm, welches ich zum Testen und Vergleichen zweier OCR Mo
 ### Voraussetzungen
 
 Das Programm ist auf spezielle Zielsysteme ausgelegt, deren einstellungen unter TODO geändert werden können. Im folgenden werden erklärt was genau benötigt wird und welche Einstellungen angepasst werden müssen, um den Test auf einem eigenen System durchzuführen.
+
+
+## Installationen
+
+tessdata best
