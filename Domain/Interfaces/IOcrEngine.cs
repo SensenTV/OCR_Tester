@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OCR_Tester.Domain.Models;
 
 namespace OCR_Tester.Domain.Interfaces
 {
@@ -11,5 +12,6 @@ namespace OCR_Tester.Domain.Interfaces
     // unabhängig von deren konkreter Implementierung.
     public interface IOcrEngine
     {
+        Task<OcrResult> ProcessImageAsync(string imagePath);
     }
 }

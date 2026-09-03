@@ -8,6 +8,7 @@ namespace OCR_Tester.ConsoleUI
     // die Auswahl des Benutzers.
     public class MainMenu
     {
+        ConsoleFormatter consoleFormatter = new ConsoleFormatter();
         public async Task ShowAsync()
         {
             bool running = true;
@@ -16,10 +17,7 @@ namespace OCR_Tester.ConsoleUI
                 Console.Clear();
 
                 Log.Information("Displaying the main menu.");
-
-                Console.WriteLine("=================================");
-                Console.WriteLine("          OCR Tester");
-                Console.WriteLine("=================================");
+                consoleFormatter.PrintHeader("OCR Benchmark - Hauptmenü");
                 Console.WriteLine();
                 Console.WriteLine("1. Vergleich starten");
                 Console.WriteLine("2. Beenden");
@@ -42,7 +40,7 @@ namespace OCR_Tester.ConsoleUI
                         break;
                     default:
                         Log.Warning("Invalid menu option selected.");
-                        Console.WriteLine("Invalid option. Please try again.");
+                        Console.WriteLine("Ungültige Angabe. Bitte erneut versuchen.");
                         break;
 
                 }

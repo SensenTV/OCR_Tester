@@ -10,22 +10,21 @@ namespace OCR_Tester.ConsoleUI
     // OCR-Vergleichsdurchlaufs bereit.
     public   class ComparisonMenu
     {
+        ConsoleFormatter consoleFormatter = new ConsoleFormatter();
+
         public async Task StartComparisonAsync()
         {
             Console.Clear();
-            Console.WriteLine("=================================");
-            Console.WriteLine("       OCR Vergleich starten");
-            Console.WriteLine("=================================");
+            consoleFormatter.PrintHeader("OCR-Vergleich");
             Console.WriteLine();
             // Hier können Sie die Logik für den Vergleich implementieren.
             // Zum Beispiel: Aufrufen der OCR-Engine, Vergleichen der Ergebnisse
             // mit der Ground Truth und Speichern der Ergebnisse.
             // Beispielhafte Ausgabe:
-            Console.WriteLine("Vergleich läuft...");
-            await Task.Delay(2000); // Simuliert eine Wartezeit für den Vergleich
-            Console.WriteLine("Vergleich abgeschlossen!");
+            consoleFormatter.PrintInfo("Vergleich läuft...");
+            consoleFormatter.PrintInfo("Vergleich abgeschlossen!");
             Console.WriteLine();
-            Console.WriteLine("Drücken Sie eine beliebige Taste, um zum Hauptmenü zurückzukehren.");
+            consoleFormatter.PrintInfo("Drücken Sie eine beliebige Taste, um zum Hauptmenü zurückzukehren.");
             Console.ReadKey();
         }
     }
