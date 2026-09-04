@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OCR_Tester.Domain.Models;
 
 namespace OCR_Tester.Evaluation
 {
@@ -10,5 +11,10 @@ namespace OCR_Tester.Evaluation
     // Berechnet und aggregiert Kennzahlen wie Edit Distance und CER.
     public class ResultEvaluator
     {
+        public void EvaluateResults()
+        {
+            SingleBenchmark singleBenchmark = new SingleBenchmark();
+
+        }
     }
 }

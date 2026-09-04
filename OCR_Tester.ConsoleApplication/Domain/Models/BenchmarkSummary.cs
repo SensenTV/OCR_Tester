@@ -3,11 +3,8 @@
     // Enthält die aggregierten Benchmark-Ergebnisse eines OCR-Modells.
     // Dazu gehören unter anderem Gesamtzeit, Durchschnittszeit, CER,
     // Tokenverbrauch und Kosten.
-    public class BenchmarkSummary
+    public class BenchmarkSummary : SingleBenchmark
     {
-        // Name des OCR-Modells.
-        public string ModelName { get; set; } = string.Empty;
-
         // Gesamtzahl der verarbeiteten Bilder.
         public int TotalImagesProcessed { get; set; }
 

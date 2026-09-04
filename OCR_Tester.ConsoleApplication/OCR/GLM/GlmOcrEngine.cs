@@ -16,6 +16,14 @@ namespace OCR_Tester.OCR.GLM
         private readonly ChatClient _chatClient;
         private readonly string _prompt;
 
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="GlmOcrEngine"/>-Klasse.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="apiKey"></param>
+        /// <param name="model"></param>
+        /// <param name="prompt"></param>
+        /// <exception cref="ArgumentException"></exception>
         public GlmOcrEngine(string endpoint, string apiKey, string model, string prompt)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
@@ -47,6 +55,11 @@ namespace OCR_Tester.OCR.GLM
             );
         }
 
+        /// <summary>
+        /// Verarbeitet ein Bild mit GLM-OCR.
+        /// </summary>
+        /// <param name="testCase">Der Testfall mit dem zu verarbeitenden Bild.</param>
+        /// <returns>Das Ergebnis der OCR-Verarbeitung.</returns>
         public async Task<OcrResult> ProcessImageAsync(ImageTestCase testCase)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -82,9 +95,6 @@ namespace OCR_Tester.OCR.GLM
                     ProcessingTimeMs = stopwatch.Elapsed.TotalMilliseconds,
                     InputTokens = inputTokens,
                     OutputTokens = outputTokens,
-
-                    // Wird später anhand der GLM-OCR-Preise berechnet.
-                    CostInCents = 0,
                 };
 
                 Log.Information(

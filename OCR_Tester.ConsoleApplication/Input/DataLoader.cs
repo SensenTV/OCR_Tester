@@ -93,7 +93,7 @@ namespace OCR_Tester.Input
                         {
                             ImageName = image.ImageName,
                             ImagePath = image.ImagePath,
-                            ExpectedText = matchingGroundTruth.ExpectedText,
+                            GroundTruth = matchingGroundTruth,
                         }
                     );
                 }

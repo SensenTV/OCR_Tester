@@ -8,7 +8,8 @@ namespace OCR_Tester.Domain.Interfaces
 {
     // Definiert die Schnittstelle zur Bewertung von OCR-Ergebnissen
     // anhand der zugehörigen Ground Truth.
-    public interface IEvaluationService
+    public interface IEvaluationService<T>
     {
+        T Calculate(string expectedText, string ocrResult);
     }
 }

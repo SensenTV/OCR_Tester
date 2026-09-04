@@ -2,14 +2,8 @@
 {
     // Repräsentiert einen vollständigen OCR-Testfall.
     // Verknüpft ein Eingabebild mit dem dazugehörigen Ground-Truth-Text.
-    public class ImageTestCase
+    public class ImageTestCase : Image
     {
-        // Name der Bilddatei.
-        public string ImageName { get; set; } = string.Empty;
-
-        // Vollständiger Pfad zur Bilddatei.
-        public string ImagePath { get; set; } = string.Empty;
-
-        public string ExpectedText { get; set; } = string.Empty;
+        public GroundTruth GroundTruth { get; set; } = new();
     }
 }

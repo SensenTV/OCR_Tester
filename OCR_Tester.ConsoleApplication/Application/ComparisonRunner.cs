@@ -1,16 +1,24 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OCR_Tester.Configuration;
+using OCR_Tester.Evaluation;
 using OCR_Tester.Input;
 using OCR_Tester.OCR.GLM;
 using OCR_Tester.OCR.Tesseract;
 
 namespace OCR_Tester.Application
 {
-    // Steuert den vollständigen Ablauf eines OCR-Vergleichsdurchlaufs.
-    // Koordiniert das Einlesen der Testdaten, die OCR-Verarbeitung,
-    // die Auswertung sowie die Speicherung der Ergebnisse.
+    /// <summary>
+    /// Steuert den vollständigen Ablauf eines OCR-Vergleichsdurchlaufs.
+    /// Koordiniert das Einlesen der Testdaten, die OCR-Verarbeitung,
+    /// die Auswertung sowie die Speicherung der Ergebnisse.
+    /// </summary>
     public class ComparisonRunner
     {
+        /// <summary>
+        /// Führt den vollständigen Ablauf eines OCR-Vergleichsdurchlaufs asynchron aus.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task RunComparisonAsync()
         {
             // Schritt 1: Testdaten einlesen
@@ -55,13 +63,27 @@ namespace OCR_Tester.Application
                 Console.WriteLine($"GLM-OCR Ergebnis: {glmOcrResult.RecognizedText}");
                 Console.WriteLine($"Tesseract Ergebnis: {tesseractOcrResult.RecognizedText}");
                 Console.WriteLine();
+
+                // Schritt 3: Ergebnisse auswerten
+                CerCalculator cerCalculator = new CerCalculator();
+                var glmBenchmark = cerCalculator.Calculate(
+                    testCase.GroundTruth.ExpectedText,
+                    glmOcrResult.RecognizedText
+                );
+                var tesseractBenchmark = cerCalculator.Calculate(
+                    testCase.GroundTruth.ExpectedText,
+                    tesseractOcrResult.RecognizedText
+                );
+                Console.WriteLine(
+                    $"""
+                    {glmOcrResult.ModelName} CER: {glmBenchmark.CharacterErrorRate} / {glmBenchmark.CharacterErrorRateInPercent}%
+                    {tesseractOcrResult.ModelName} CER: {tesseractBenchmark.CharacterErrorRate} / {tesseractBenchmark.CharacterErrorRateInPercent}%
+                    """
+                );
+
+                // Schritt 4: Ergebnisse speichern
+                //SaveResults(evaluationResults);
             }
-
-            // Schritt 3: Ergebnisse auswerten
-            //var evaluationResults = EvaluateResults(testCases, ocrResults);
-
-            // Schritt 4: Ergebnisse speichern
-            //SaveResults(evaluationResults);
         }
     }
 }

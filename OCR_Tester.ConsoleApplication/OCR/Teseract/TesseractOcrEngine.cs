@@ -18,6 +18,13 @@ namespace OCR_Tester.OCR.Tesseract
         private readonly EngineMode _engineMode;
         private readonly PageSegMode _pageSegmentationMode;
 
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="TesseractOcrEngine"/>-Klasse.
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        /// <param name="language"></param>
+        /// <param name="engineMode"></param>
+        /// <param name="pageSegmentationMode"></param>
         public TesseractOcrEngine(
             string tessDataPath,
             string language,
@@ -34,6 +41,8 @@ namespace OCR_Tester.OCR.Tesseract
         /// <summary>
         /// Verarbeitet ein einzelnes Bild mit Tesseract.
         /// </summary>
+        /// <param name="testCase">Der Testfall mit dem zu verarbeitenden Bild.</param>
+        /// <returns>Das Ergebnis der OCR-Verarbeitung.</returns>
         public Task<OcrResult> ProcessImageAsync(ImageTestCase testCase)
         {
             if (string.IsNullOrWhiteSpace(testCase.ImagePath))
@@ -72,13 +81,6 @@ namespace OCR_Tester.OCR.Tesseract
                     ModelName = "Tesseract",
                     RecognizedText = recognizedText,
                     ProcessingTimeMs = stopwatch.Elapsed.TotalMilliseconds,
-
-                    // Tesseract arbeitet nicht mit Tokens.
-                    InputTokens = 0,
-                    OutputTokens = 0,
-
-                    // Lokale Tesseract-Verarbeitung verursacht keine API-Kosten.
-                    CostInCents = 0,
                 };
 
                 return Task.FromResult(result);

@@ -3,7 +3,7 @@
     // Repräsentiert das Ergebnis einer OCR-Verarbeitung für ein einzelnes Bild.
     // Enthält den erkannten Text sowie Messwerte wie Verarbeitungszeit,
     // Tokenverbrauch und gegebenenfalls die berechneten Kosten.
-    public class OcrResult
+    public class OcrResult : ImageTestCase
     {
         // Name des verwendeten OCR-Modells, z. B. "Tesseract" oder "GLM-OCR".
         public string ModelName { get; set; } = string.Empty;
@@ -24,9 +24,5 @@
 
         // Gesamte Anzahl der verwendeten Tokens.
         public int TotalTokens => InputTokens + OutputTokens;
-
-        // Kosten der Verarbeitung in Cent.
-        // Bei Tesseract in der Regel 0, da lokal ausgeführt.
-        public double CostInCents { get; set; }
     }
 }
