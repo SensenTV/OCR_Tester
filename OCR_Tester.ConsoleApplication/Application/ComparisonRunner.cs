@@ -43,6 +43,11 @@ namespace OCR_Tester.Application
             var jsonResultWriter = new JsonResultWriter();
             var cerCalculator = new CerCalculator();
             var summaryCalculator = new BenchmarkSummaryCalculator();
+            var apiKey =
+                Environment.GetEnvironmentVariable("GLM_API_KEY", EnvironmentVariableTarget.User)
+                ?? throw new InvalidOperationException(
+                    "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt."
+                );
 
             // ============================================================
             // Testdaten laden
@@ -72,6 +77,10 @@ namespace OCR_Tester.Application
                 ?? throw new InvalidOperationException(
                     "Die AppSettings konnten nicht geladen werden."
                 );
+
+            settings
+                .OcrEngines.First(x => x.Type.Equals("glm", StringComparison.OrdinalIgnoreCase))
+                .ApiKey = apiKey;
 
             // ============================================================
             // OCR-Engines erstellen
