@@ -36,7 +36,7 @@ namespace OCR_Tester.Application
             );
 
             Directory.CreateDirectory(resultsDirectory);
-
+            
             // ============================================================
             // Komponenten vorbereiten
             // ============================================================
@@ -53,7 +53,7 @@ namespace OCR_Tester.Application
                 Log.Error("API key not found. Exiting the comparison runner.");
 
                 throw new InvalidOperationException(
-                    "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt."
+                    "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt.Setze sie bitte(Siehe README.md für Details) und starte die Anwendung erneut. "
                 );
             }
 
