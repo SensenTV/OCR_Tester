@@ -1,4 +1,5 @@
 using OCR_Tester.Domain.Models;
+using Serilog;
 
 namespace OCR_Tester.Evaluation
 {
@@ -32,6 +33,8 @@ namespace OCR_Tester.Evaluation
 
             modelSummary.AverageProcessingTimeMs =
                 modelSummary.TotalProcessingTimeMs / modelSummary.TotalImagesProcessed;
+            
+            Log.Information("Updated summary for model {ModelName}", result.ModelName);
         }
 
         private BenchmarkModelSummary GetOrCreateModelSummary(string modelName)
@@ -48,6 +51,8 @@ namespace OCR_Tester.Evaluation
             modelSummary = new BenchmarkModelSummary { ModelName = modelName };
 
             _summary.Models.Add(modelSummary);
+
+            Log.Information("Created new summary for model {ModelName}", modelName);
 
             return modelSummary;
         }

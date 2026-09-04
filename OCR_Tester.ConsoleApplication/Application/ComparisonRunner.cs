@@ -6,6 +6,7 @@ using OCR_Tester.Domain.Models;
 using OCR_Tester.Evaluation;
 using OCR_Tester.Input;
 using OCR_Tester.Output;
+using Serilog;
 using Spectre.Console;
 
 namespace OCR_Tester.Application
@@ -43,11 +44,18 @@ namespace OCR_Tester.Application
             var jsonResultWriter = new JsonResultWriter();
             var cerCalculator = new CerCalculator();
             var summaryCalculator = new BenchmarkSummaryCalculator();
-            var apiKey =
-                Environment.GetEnvironmentVariable("GLM_API_KEY", EnvironmentVariableTarget.User)
-                ?? throw new InvalidOperationException(
+            var apiKey = Environment.GetEnvironmentVariable(
+                "GLM_API_KEY",
+                EnvironmentVariableTarget.User
+            );
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                Log.Error("API key not found. Exiting the comparison runner.");
+
+                throw new InvalidOperationException(
                     "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt."
                 );
+            }
 
             // ============================================================
             // Testdaten laden
@@ -59,6 +67,7 @@ namespace OCR_Tester.Application
             if (testCases.Count == 0)
             {
                 _consoleFormatter.PrintError("Es wurden keine Testfälle gefunden.");
+                Log.Warning("No test cases found. Exiting the comparison runner.");
 
                 return;
             }
@@ -72,12 +81,18 @@ namespace OCR_Tester.Application
                 .AddJsonFile("Configuration/appsettings.json", optional: false)
                 .Build();
 
-            var settings =
-                configuration.Get<AppSettings>()
-                ?? throw new InvalidOperationException(
+            var settings = configuration.Get<AppSettings>();
+            if (settings == null)
+            {
+                Log.Error("Failed to load configuration. Exiting the comparison runner.");
+                throw new InvalidOperationException(
                     "Die AppSettings konnten nicht geladen werden."
                 );
+            }
 
+            // ============================================================
+            // API-Key für GLM-Engine setzen (In meinem Fall: Für Unsloth studio auf dem das Modell läuft)
+            // ============================================================
             settings
                 .OcrEngines.First(x => x.Type.Equals("glm", StringComparison.OrdinalIgnoreCase))
                 .ApiKey = apiKey;
@@ -93,6 +108,7 @@ namespace OCR_Tester.Application
             if (ocrEngines.Count == 0)
             {
                 _consoleFormatter.PrintError("Es wurden keine OCR-Engines konfiguriert.");
+                Log.Warning("No OCR engines configured. Exiting the comparison runner.");
 
                 return;
             }
@@ -154,6 +170,12 @@ namespace OCR_Tester.Application
                             );
 
                             jsonResultWriter.WriteResultsToJsonFile(resultFilePath, result);
+                            Log.Information(
+                                "Saved individual result for image '{ImageName}' and model '{ModelName}' to '{ResultFilePath}'.",
+                                testCase.ImageName,
+                                result.ModelName,
+                                resultFilePath
+                            );
 
                             // Fortschritt aktualisieren
                             currentOperation++;
@@ -176,6 +198,10 @@ namespace OCR_Tester.Application
             jsonResultWriter.WriteResultsToJsonFile(
                 Path.Combine(resultsDirectory, "SummaryResults.json"),
                 summary
+            );
+            Log.Information(
+                "Saved benchmark summary to '{SummaryFilePath}'.",
+                Path.Combine(resultsDirectory, "SummaryResults.json")
             );
 
             // ============================================================

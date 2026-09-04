@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OCR_Tester.Domain.Interfaces;
 using OCR_Tester.Domain.Models;
+using Serilog;
 
 namespace OCR_Tester.Evaluation
 {
@@ -51,6 +52,7 @@ namespace OCR_Tester.Evaluation
                 }
             }
             // return result
+            Log.Information("Calculated CER between expected text and OCR result");
             return matrix[expectedTextLength, ocrResultLength];
         }
 
@@ -66,6 +68,7 @@ namespace OCR_Tester.Evaluation
 
             float result = (float)editDistance / expectedTextLength * 100;
 
+            Log.Information("Calculated CER in percent between expected text and OCR result");
             return MathF.Round(result, 2);
         }
 

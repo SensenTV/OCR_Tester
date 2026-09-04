@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using OCR_Tester.Application;
+using Serilog;
 
 namespace OCR_Tester.ConsoleUI
 {
@@ -14,6 +15,7 @@ namespace OCR_Tester.ConsoleUI
 
             _consoleFormatter.PrintHeader("OCR-Vergleich");
 
+            Log.Information("Starting OCR comparison.");
             await _comparisonRunner.RunComparisonAsync();
 
             _consoleFormatter.WaitForKey();

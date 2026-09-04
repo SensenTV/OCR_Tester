@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using OCR_Tester.Domain.Interfaces;
 using OCR_Tester.Domain.Models;
+using Serilog;
 using Tesseract;
 
 namespace OCR_Tester.OCR.Tesseract
@@ -48,14 +46,19 @@ namespace OCR_Tester.OCR.Tesseract
         {
             if (string.IsNullOrWhiteSpace(testCase.ImagePath))
             {
+                Log.Error("Image path is empty. Exiting the Tesseract OCR engine processing.");
                 throw new ArgumentException(
-                    "Der Bildpfad darf nicht leer sein.",
+                    "Der Bildpfad darf nicht leer sein. Füge ihn in der appsettings.json-Datei ein.",
                     nameof(testCase.ImagePath)
                 );
             }
 
             if (!File.Exists(testCase.ImagePath))
             {
+                Log.Error(
+                    "Image file not found: {ImagePath}. Exiting the Tesseract OCR engine processing.",
+                    testCase.ImagePath
+                );
                 throw new FileNotFoundException(
                     "Das angegebene Bild wurde nicht gefunden.",
                     testCase.ImagePath
@@ -89,6 +92,11 @@ namespace OCR_Tester.OCR.Tesseract
             catch
             {
                 stopwatch.Stop();
+                Log.Error(
+                    "An error occurred while processing the image with Tesseract: {ImagePath}. Processing time: {ProcessingTime} ms.",
+                    testCase.ImagePath,
+                    stopwatch.Elapsed.TotalMilliseconds
+                );
                 throw;
             }
         }

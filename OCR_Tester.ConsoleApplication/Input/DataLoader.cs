@@ -44,6 +44,15 @@ namespace OCR_Tester.Input
             )
             {
                 images.Add(new Image { ImageName = Path.GetFileName(file), ImagePath = file });
+                bool isEmpty = !images.Any();
+                if (isEmpty)
+                {
+                    Log.Warning(
+                        "No BMP images found in the specified folder: {FolderPath}",
+                        folderPath
+                    );
+                    Console.WriteLine("Warnung: Keine BMP-Bilder im angegebenen Ordner gefunden.");
+                }
             }
             return images;
         }
@@ -65,6 +74,13 @@ namespace OCR_Tester.Input
                 if (data != null)
                 {
                     groundTruths.AddRange(data.Values);
+                }
+                else
+                {
+                    Log.Warning("No valid JSON data found in the file: {FilePath}", file);
+                    Console.WriteLine(
+                        $"Warnung: Keine gültigen JSON-Daten in der Datei '{file}' gefunden."
+                    );
                 }
             }
 

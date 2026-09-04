@@ -19,7 +19,6 @@ namespace OCR_Tester.Output
                     WriteIndented = true, // Für eine lesbare Formatierung
                 }
             );
-
             System.IO.File.WriteAllText(filePath, jsonString);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using OCR_Tester.Domain.Models;
+using Serilog;
 
 namespace OCR_Tester.Output
 {
@@ -13,6 +14,8 @@ namespace OCR_Tester.Output
             {
                 AppendModelSummary(summaryBuilder, modelSummary);
             }
+
+            Log.Information("Formatted benchmark summary for console output.");
 
             return summaryBuilder.ToString();
         }

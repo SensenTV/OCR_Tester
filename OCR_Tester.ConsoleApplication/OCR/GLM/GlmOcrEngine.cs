@@ -29,20 +29,29 @@ namespace OCR_Tester.OCR.GLM
         {
             if (string.IsNullOrWhiteSpace(endpoint))
             {
+                Log.Error("API endpoint is empty. Exiting the GLM OCR engine initialization.");
                 throw new ArgumentException(
-                    "Der API-Endpunkt darf nicht leer sein.",
+                    "Der API-Endpunkt darf nicht leer sein. Füge ihn deiner Environment-Variable hinzu. Siehe README.md für weitere Informationen.",
                     nameof(endpoint)
                 );
             }
 
             if (string.IsNullOrWhiteSpace(model))
             {
-                throw new ArgumentException("Der Modellname darf nicht leer sein.", nameof(model));
+                Log.Error("Model name is empty. Exiting the GLM OCR engine initialization.");
+                throw new ArgumentException(
+                    "Der Modellname darf nicht leer sein. Füge ihn in die appsettings.json-Datei hinzu.",
+                    nameof(model)
+                );
             }
 
             if (string.IsNullOrWhiteSpace(prompt))
             {
-                throw new ArgumentException("Der Prompt darf nicht leer sein.", nameof(prompt));
+                Log.Error("Prompt is empty. Exiting the GLM OCR engine initialization.");
+                throw new ArgumentException(
+                    "Der Prompt darf nicht leer sein. Füge es in den appsettings.json-Datei hinzu.",
+                    nameof(prompt)
+                );
             }
 
             _prompt = prompt;
