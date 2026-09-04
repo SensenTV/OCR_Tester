@@ -1,118 +1,246 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OCR_Tester.Domain.Models;
+using Spectre.Console;
 
 namespace OCR_Tester.ConsoleUI
 {
     /// <summary>
     /// Verantwortlich für die formatierte Darstellung von Informationen
     /// in der Konsolenanwendung.
-    /// 
-    /// Die Klasse enthält keine Programmlogik und trifft keine Entscheidungen.
-    /// Sie kümmert sich ausschließlich um die Ausgabe und Formatierung.
     /// </summary>
     public class ConsoleFormatter
     {
-        const int width = 40;
+        private const int Width = 70;
 
         /// <summary>
-        /// Gibt eine Überschrift mit Trennlinien aus.
+        /// Gibt eine große Überschrift aus.
         /// </summary>
-        /// <param name="title">Titel der aktuellen Ansicht.</param>
         public void PrintHeader(string title)
         {
+            AnsiConsole.Write(new Rule($"[bold cyan]{title}[/]").RuleStyle("cyan").Centered());
 
-            Console.WriteLine(new string('=', width));
-            Console.WriteLine(title.PadLeft((width + title.Length) / 2));
-            Console.WriteLine(new string('=', width));
-            Console.WriteLine();
+            AnsiConsole.WriteLine();
         }
 
         /// <summary>
         /// Gibt eine Erfolgsmeldung aus.
         /// </summary>
-        /// <param name="message">Anzuzeigende Nachricht.</param>
         public void PrintSuccess(string message)
         {
-            Console.WriteLine($"[OK] {message}");
+            AnsiConsole.MarkupLine($"[green]✔ {Markup.Escape(message)}[/]");
         }
 
         /// <summary>
         /// Gibt eine Fehlermeldung aus.
         /// </summary>
-        /// <param name="message">Anzuzeigende Fehlermeldung.</param>
         public void PrintError(string message)
         {
-            Console.WriteLine($"[FEHLER] {message}");
+            AnsiConsole.MarkupLine($"[red]✖ {Markup.Escape(message)}[/]");
         }
 
         /// <summary>
         /// Gibt eine Warnung aus.
         /// </summary>
-        /// <param name="message">Anzuzeigende Warnung.</param>
         public void PrintWarning(string message)
         {
-            Console.WriteLine($"[WARNUNG] {message}");
+            AnsiConsole.MarkupLine($"[yellow]⚠ {Markup.Escape(message)}[/]");
         }
 
         /// <summary>
-        /// Gibt eine normale Informationsmeldung aus.
+        /// Gibt eine Informationsmeldung aus.
         /// </summary>
-        /// <param name="message">Anzuzeigende Information.</param>
         public void PrintInfo(string message)
         {
-            Console.WriteLine($"[INFO] {message}");
+            AnsiConsole.MarkupLine($"[cyan]ℹ {Markup.Escape(message)}[/]");
         }
 
         /// <summary>
         /// Gibt eine Eingabeaufforderung aus.
         /// </summary>
-        /// <param name="message">Aufforderung an den Benutzer.</param>
         public void PrintPrompt(string message)
         {
-            Console.Write(message);
+            AnsiConsole.Markup($"[cyan]{Markup.Escape(message)}[/]");
         }
 
         /// <summary>
-        /// Wartet darauf, dass der Benutzer eine Taste drückt.
+        /// Wartet auf eine Benutzereingabe.
         /// </summary>
         public void WaitForKey()
         {
-            Console.WriteLine();
-            Console.WriteLine("Drücken Sie eine beliebige Taste, um fortzufahren...");
-            Console.ReadKey();
+            AnsiConsole.MarkupLine("[grey]Drücken Sie eine beliebige Taste, um fortzufahren...[/]");
+
+            Console.ReadKey(true);
         }
 
         /// <summary>
-        /// Gibt den Fortschritt bei der Verarbeitung eines Bildes aus.
+        /// Gibt den Fortschritt der Bildverarbeitung aus.
         /// </summary>
-        /// <param name="current">Aktuelle Bildnummer.</param>
-        /// <param name="total">Gesamtanzahl der Bilder.</param>
-        /// <param name="imageName">Name des aktuell verarbeiteten Bildes.</param>
         public void PrintProgress(int current, int total, string imageName)
         {
-            Console.WriteLine(
-                $"[{current}/{total}] Verarbeite: {imageName}"
+            AnsiConsole.MarkupLine(
+                $"[grey][{current}/{total}][/] "
+                    + $"[cyan]Verarbeite:[/] {Markup.Escape(imageName)}"
             );
         }
 
         /// <summary>
-        /// Gibt die Ergebnisse eines einzelnen OCR-Vergleichs aus.
+        /// Gibt das Ergebnis eines einzelnen OCR-Vergleichs aus.
         /// </summary>
         public void PrintComparisonResult(
             string modelName,
             string imageName,
             double processingTimeMs,
-            double cerInPercent)
+            double cerInPercent
+        )
         {
-            Console.WriteLine();
-            Console.WriteLine($"Modell: {modelName}");
-            Console.WriteLine($"Bild: {imageName}");
-            Console.WriteLine($"Verarbeitungszeit: {processingTimeMs:F2} ms");
-            Console.WriteLine($"CER: {cerInPercent:F2} %");
+            var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Cyan);
+
+            table.AddColumn("[bold]Eigenschaft[/]");
+            table.AddColumn("[bold]Wert[/]");
+
+            table.AddRow("Modell", $"[cyan]{Markup.Escape(modelName)}[/]");
+
+            table.AddRow("Bild", Markup.Escape(imageName));
+
+            table.AddRow("Verarbeitungszeit", $"[yellow]{processingTimeMs:F2} ms[/]");
+
+            table.AddRow("CER", GetCerMarkup(cerInPercent));
+
+            AnsiConsole.Write(table);
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt eine allgemeine Statusbox aus.
+        /// </summary>
+        public void PrintStatus(string title, string message)
+        {
+            var panel = new Panel(new Markup(Markup.Escape(message)))
+            {
+                Header = new PanelHeader($"[bold cyan]{Markup.Escape(title)}[/]"),
+                Border = BoxBorder.Rounded,
+                BorderStyle = new Style(Color.Cyan),
+                Padding = new Padding(2, 1),
+            };
+
+            AnsiConsole.Write(panel);
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt eine horizontale Trennlinie aus.
+        /// </summary>
+        public void PrintSeparator()
+        {
+            AnsiConsole.Write(new Rule().RuleStyle("grey"));
+        }
+
+        /// <summary>
+        /// Gibt eine einfache Liste aus.
+        /// </summary>
+        public void PrintList(IEnumerable<string> items)
+        {
+            foreach (var item in items)
+            {
+                AnsiConsole.MarkupLine($"[cyan]•[/] {Markup.Escape(item)}");
+            }
+
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt eine Startmeldung für einen Benchmark aus.
+        /// </summary>
+        public void PrintBenchmarkStart(int imageCount, int engineCount)
+        {
+            var panel = new Panel(
+                new Markup(
+                    $"[white]Bilder:[/] [cyan]{imageCount}[/]\n"
+                        + $"[white]OCR-Engines:[/] [cyan]{engineCount}[/]\n"
+                        + $"[white]Vergleiche:[/] [cyan]{imageCount * engineCount}[/]"
+                )
+            )
+            {
+                Header = new PanelHeader("[bold]Benchmark gestartet[/]"),
+                Border = BoxBorder.Double,
+                BorderStyle = new Style(Color.Green),
+                Padding = new Padding(2, 1),
+            };
+
+            AnsiConsole.Write(panel);
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt eine Abschlussmeldung des Benchmarks aus.
+        /// </summary>
+        public void PrintBenchmarkFinished(string resultsDirectory)
+        {
+            var panel = new Panel(
+                new Markup(
+                    "[green]Der Benchmark wurde erfolgreich abgeschlossen.[/]\n\n"
+                        + $"[grey]Ergebnisse:[/] {Markup.Escape(resultsDirectory)}"
+                )
+            )
+            {
+                Header = new PanelHeader("[bold green]Benchmark abgeschlossen[/]"),
+                Border = BoxBorder.Double,
+                BorderStyle = new Style(Color.Green),
+                Padding = new Padding(2, 1),
+            };
+
+            AnsiConsole.Write(panel);
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt eine Tabelle mit den Benchmark-Ergebnissen aus.
+        /// </summary>
+        public void PrintSummary(IEnumerable<BenchmarkModelSummary> summaries)
+        {
+            var table = new Table()
+                .Border(TableBorder.Rounded)
+                .BorderColor(Color.Cyan)
+                .Title("[bold cyan]OCR Benchmark Ergebnisse[/]");
+
+            table.AddColumn("Modell");
+            table.AddColumn("Bilder");
+            table.AddColumn("Ø Zeit");
+            table.AddColumn("Ø CER");
+            table.AddColumn("Input Tokens");
+            table.AddColumn("Output Tokens");
+
+            foreach (var summary in summaries)
+            {
+                table.AddRow(
+                    Markup.Escape(summary.ModelName),
+                    summary.TotalImagesProcessed.ToString(),
+                    $"{summary.AverageProcessingTimeMs:F2} ms",
+                    GetCerMarkup(summary.OverallCharacterErrorRate),
+                    summary.TotalInputTokens.ToString(),
+                    summary.TotalOutputTokens.ToString()
+                );
+            }
+
+            AnsiConsole.Write(table);
+            AnsiConsole.WriteLine();
+        }
+
+        /// <summary>
+        /// Gibt einen farblich passenden CER-Wert zurück.
+        /// </summary>
+        private static string GetCerMarkup(double cer)
+        {
+            if (cer <= 5)
+            {
+                return $"[green]{cer:F2} %[/]";
+            }
+
+            if (cer <= 15)
+            {
+                return $"[yellow]{cer:F2} %[/]";
+            }
+
+            return $"[red]{cer:F2} %[/]";
         }
     }
 }
-

@@ -1,35 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Spectre.Console;
 using OCR_Tester.Application;
-using OCR_Tester.OCR.Tesseract;
 
 namespace OCR_Tester.ConsoleUI
 {
-    // Stellt die Benutzerinteraktion für die Durchführung eines
-    // OCR-Vergleichsdurchlaufs bereit.
     public class ComparisonMenu
     {
-        ConsoleFormatter consoleFormatter = new ConsoleFormatter();
-        ComparisonRunner comparisonRunner = new ComparisonRunner();
+        private readonly ConsoleFormatter _consoleFormatter = new();
+        private readonly ComparisonRunner _comparisonRunner = new();
 
         public async Task StartComparisonAsync()
         {
-            Console.Clear();
-            consoleFormatter.PrintHeader("OCR-Vergleich");
-            Console.WriteLine();
+            AnsiConsole.Clear();
 
-            await comparisonRunner.RunComparisonAsync();
+            _consoleFormatter.PrintHeader("OCR-Vergleich");
 
-            consoleFormatter.PrintInfo("Vergleich läuft...");
-            consoleFormatter.PrintInfo("Vergleich abgeschlossen!");
-            Console.WriteLine();
-            consoleFormatter.PrintInfo(
-                "Drücken Sie eine beliebige Taste, um zum Hauptmenü zurückzukehren."
-            );
-            Console.ReadKey();
+            await _comparisonRunner.RunComparisonAsync();
+
+            _consoleFormatter.WaitForKey();
         }
     }
 }

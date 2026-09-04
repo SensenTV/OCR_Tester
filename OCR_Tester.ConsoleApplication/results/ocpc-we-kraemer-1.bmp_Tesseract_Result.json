@@ -1,0 +1,14 @@
+{
+  "SingleBenchmark": {
+    "CharacterErrorRate": 175,
+    "CharacterErrorRateInPercent": 84.54
+  },
+  "CharacterErrorRate": 175,
+  "CharacterErrorRateInPercent": 84.54,
+  "ModelName": "Tesseract",
+  "RecognizedText": "\u201C\u201CA\u2014\u2018\u0022;n\u2014\u00AB-n\u201A-- . \\ \u2018\nI I \u0027 . .. \u0027\n4/ - . __ , %; _.\u201Aa.\u2018\u201A_ :_\num \u2019 7\nf \\\n| \u0027f\u0022 \u0022: Flo m macmnsmgos\n\u201A08 1\u00B0\nMOI NO. 000138380 .\nMon NO. , 7r\n\u0022 I \u0022| \u201CN\u2018 \u0027\n\u2018\u2014 V \u201E \u2018\n. V V \u2018, f\u201C\n- \u201Ezu _ ) \u201E _ .\n__ r r \u201CW\u201C \u2018 \u2018\n, \u201AI\u2018T\u0022 \u003E=\u201C \u2018\nL \u0022\u201C f\u0022 Ex \\\n_\n",
+  "ProcessingTimeMs": 1519,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

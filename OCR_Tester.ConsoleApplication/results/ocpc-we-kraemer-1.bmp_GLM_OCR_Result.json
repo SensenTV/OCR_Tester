@@ -1,0 +1,14 @@
+{
+  "SingleBenchmark": {
+    "CharacterErrorRate": 82,
+    "CharacterErrorRateInPercent": 39.61
+  },
+  "CharacterErrorRate": 82,
+  "CharacterErrorRateInPercent": 39.61,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nGERMANY\n\nArt. no. 340244\nSize A-XS\nColour Black\nDescription EPIC PRO Back protector:STEEDS\nPcs 10\nOrder NO. 00013830\nCarton NO. 199\nBarcode",
+  "ProcessingTimeMs": 1140,
+  "InputTokens": 620,
+  "OutputTokens": 75,
+  "TotalTokens": 695
+}

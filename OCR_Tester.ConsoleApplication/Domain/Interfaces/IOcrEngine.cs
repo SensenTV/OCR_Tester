@@ -12,6 +12,8 @@ namespace OCR_Tester.Domain.Interfaces
     // unabhängig von deren konkreter Implementierung.
     public interface IOcrEngine
     {
+        string ModelName { get; }
+
         Task<OcrResult> ProcessImageAsync(ImageTestCase testCase);
     }
 }

@@ -17,6 +17,7 @@ namespace OCR_Tester.OCR.Tesseract
         private readonly string _language;
         private readonly EngineMode _engineMode;
         private readonly PageSegMode _pageSegmentationMode;
+        public string ModelName => "Tesseract";
 
         /// <summary>
         /// Initialisiert eine neue Instanz der <see cref="TesseractOcrEngine"/>-Klasse.
@@ -80,7 +81,7 @@ namespace OCR_Tester.OCR.Tesseract
                 {
                     ModelName = "Tesseract",
                     RecognizedText = recognizedText,
-                    ProcessingTimeMs = stopwatch.Elapsed.TotalMilliseconds,
+                    ProcessingTimeMs = (int)stopwatch.Elapsed.TotalMilliseconds,
                 };
 
                 return Task.FromResult(result);

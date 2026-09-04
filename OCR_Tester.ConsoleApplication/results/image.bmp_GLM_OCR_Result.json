@@ -1,0 +1,14 @@
+{
+  "SingleBenchmark": {
+    "CharacterErrorRate": 40,
+    "CharacterErrorRateInPercent": 12.66
+  },
+  "CharacterErrorRate": 40,
+  "CharacterErrorRateInPercent": 12.66,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "Der Fehler ist einfach: TesseractOnly ist kein automatisch bekannter Wert. Du musst den Enum-Wert von Tesseract vollst\u00E4ndig angeben.\n\nIn deinem Code steht:\n\n\u00AB\u300B C#\nengineMode: TesseractOnly,\n\nDas sollte hei\u00DFen:\n\n\u00AB\u300B C#\nengineMode: EngineMode.Default,\n\nund daf\u00FCr brauchst du:\n\n\u00AB\u300B C#\nusing Tesseract;\n\nDein korrigierter Code",
+  "ProcessingTimeMs": 1370,
+  "InputTokens": 562,
+  "OutputTokens": 94,
+  "TotalTokens": 656
+}

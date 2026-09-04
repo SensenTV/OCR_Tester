@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OCR_Tester.Configuration;
+using OCR_Tester.ConsoleUI;
+using OCR_Tester.Domain.Interfaces;
+using OCR_Tester.Domain.Models;
 using OCR_Tester.Evaluation;
 using OCR_Tester.Input;
-using OCR_Tester.OCR.GLM;
-using OCR_Tester.OCR.Tesseract;
+using OCR_Tester.Output;
+using Spectre.Console;
 
 namespace OCR_Tester.Application
 {
@@ -14,20 +17,50 @@ namespace OCR_Tester.Application
     /// </summary>
     public class ComparisonRunner
     {
+        private readonly ConsoleFormatter _consoleFormatter = new();
+
         /// <summary>
-        /// Führt den vollständigen Ablauf eines OCR-Vergleichsdurchlaufs asynchron aus.
+        /// Führt den vollständigen OCR-Benchmark asynchron aus.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
         public async Task RunComparisonAsync()
         {
-            // Schritt 1: Testdaten einlesen
-            DataLoader dataLoader = new DataLoader();
+            // ============================================================
+            // Ergebnisordner vorbereiten
+            // ============================================================
+
+            string resultsDirectory = Path.Combine(
+                AppContext.BaseDirectory,
+                "Results",
+                DateTime.Now.ToString("yyyyMMdd_HHmmss")
+            );
+
+            Directory.CreateDirectory(resultsDirectory);
+
+            // ============================================================
+            // Komponenten vorbereiten
+            // ============================================================
+
+            var jsonResultWriter = new JsonResultWriter();
+            var cerCalculator = new CerCalculator();
+            var summaryCalculator = new BenchmarkSummaryCalculator();
+
+            // ============================================================
+            // Testdaten laden
+            // ============================================================
+
+            var dataLoader = new DataLoader();
             var testCases = dataLoader.LoadImageTestCases();
 
-            Console.WriteLine($"Es wurden {testCases.Count} Testfälle geladen.");
+            if (testCases.Count == 0)
+            {
+                _consoleFormatter.PrintError("Es wurden keine Testfälle gefunden.");
 
-            // Schritt 2: OCR-Verarbeitung durchführen
+                return;
+            }
+
+            // ============================================================
+            // Konfiguration laden
+            // ============================================================
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
@@ -40,50 +73,117 @@ namespace OCR_Tester.Application
                     "Die AppSettings konnten nicht geladen werden."
                 );
 
-            GlmOcrEngine glmOcrEngine = new GlmOcrEngine(
-                settings.GlmOcr.Endpoint,
-                settings.GlmOcr.ApiKey,
-                settings.GlmOcr.Model,
-                settings.GlmOcr.Prompt
-            );
-            TesseractOcrEngine tesseractOcrEngine = new TesseractOcrEngine(
-                settings.Tesseract.TessDataPath,
-                settings.Tesseract.Language,
-                settings.Tesseract.EngineMode,
-                settings.Tesseract.PageSegmentationMode
-            );
+            // ============================================================
+            // OCR-Engines erstellen
+            // ============================================================
 
-            foreach (var testCase in testCases)
+            var factory = new OcrEngineFactory();
+
+            List<IOcrEngine> ocrEngines = settings.OcrEngines.Select(factory.Create).ToList();
+
+            if (ocrEngines.Count == 0)
             {
-                var glmOcrResult = await glmOcrEngine.ProcessImageAsync(testCase);
-                var tesseractOcrResult = await tesseractOcrEngine.ProcessImageAsync(testCase);
+                _consoleFormatter.PrintError("Es wurden keine OCR-Engines konfiguriert.");
 
-                // Hier können Sie die Ergebnisse vergleichen und auswerten
-                Console.WriteLine($"Bild: {testCase.ImageName}");
-                Console.WriteLine($"GLM-OCR Ergebnis: {glmOcrResult.RecognizedText}");
-                Console.WriteLine($"Tesseract Ergebnis: {tesseractOcrResult.RecognizedText}");
-                Console.WriteLine();
-
-                // Schritt 3: Ergebnisse auswerten
-                CerCalculator cerCalculator = new CerCalculator();
-                var glmBenchmark = cerCalculator.Calculate(
-                    testCase.GroundTruth.ExpectedText,
-                    glmOcrResult.RecognizedText
-                );
-                var tesseractBenchmark = cerCalculator.Calculate(
-                    testCase.GroundTruth.ExpectedText,
-                    tesseractOcrResult.RecognizedText
-                );
-                Console.WriteLine(
-                    $"""
-                    {glmOcrResult.ModelName} CER: {glmBenchmark.CharacterErrorRate} / {glmBenchmark.CharacterErrorRateInPercent}%
-                    {tesseractOcrResult.ModelName} CER: {tesseractBenchmark.CharacterErrorRate} / {tesseractBenchmark.CharacterErrorRateInPercent}%
-                    """
-                );
-
-                // Schritt 4: Ergebnisse speichern
-                //SaveResults(evaluationResults);
+                return;
             }
+
+            // ============================================================
+            // Benchmark-Informationen anzeigen
+            // ============================================================
+
+            _consoleFormatter.PrintBenchmarkStart(testCases.Count, ocrEngines.Count);
+
+            // ============================================================
+            // OCR-Verarbeitung
+            // ============================================================
+
+            int totalOperations = testCases.Count * ocrEngines.Count;
+
+            int currentOperation = 0;
+
+            await AnsiConsole
+                .Progress()
+                .AutoClear(false)
+                .Columns(
+                    new TaskDescriptionColumn(),
+                    new ProgressBarColumn(),
+                    new PercentageColumn(),
+                    new SpinnerColumn()
+                )
+                .StartAsync(async ctx =>
+                {
+                    var progressTask = ctx.AddTask(
+                        "[cyan]OCR Benchmark[/]",
+                        maxValue: totalOperations
+                    );
+
+                    foreach (var testCase in testCases)
+                    {
+                        foreach (var engine in ocrEngines)
+                        {
+                            progressTask.Description =
+                                $"[cyan]{Markup.Escape(engine.ModelName)}[/] "
+                                + $"[grey]→ {Markup.Escape(testCase.ImageName)}[/]";
+
+                            // OCR durchführen
+                            var result = await engine.ProcessImageAsync(testCase);
+
+                            // CER berechnen
+                            result.SingleBenchmark = cerCalculator.Calculate(
+                                testCase.ExpectedText,
+                                result.RecognizedText
+                            );
+
+                            // Ergebnis zur Summary hinzufügen
+                            summaryCalculator.AddResult(result);
+
+                            // Einzelnes Ergebnis speichern
+                            string resultFilePath = Path.Combine(
+                                resultsDirectory,
+                                $"{testCase.ImageName}_{result.ModelName}_Result.json"
+                            );
+
+                            jsonResultWriter.WriteResultsToJsonFile(resultFilePath, result);
+
+                            // Fortschritt aktualisieren
+                            currentOperation++;
+
+                            progressTask.Value = currentOperation;
+                        }
+                    }
+                });
+
+            // ============================================================
+            // Gesamtergebnis
+            // ============================================================
+
+            BenchmarkSummary summary = summaryCalculator.Summary;
+
+            // ============================================================
+            // Summary speichern
+            // ============================================================
+
+            jsonResultWriter.WriteResultsToJsonFile(
+                Path.Combine(resultsDirectory, "SummaryResults.json"),
+                summary
+            );
+
+            // ============================================================
+            // Summary anzeigen
+            // ============================================================
+
+            Console.WriteLine();
+
+            _consoleFormatter.PrintSummary(summary.Models);
+
+            // ============================================================
+            // Abschlussmeldung
+            // ============================================================
+
+            Console.WriteLine();
+
+            _consoleFormatter.PrintBenchmarkFinished(resultsDirectory);
         }
     }
 }

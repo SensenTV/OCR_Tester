@@ -1,47 +1,46 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Spectre.Console;
 using Serilog;
 
 namespace OCR_Tester.ConsoleUI
 {
-    // Stellt das Hauptmenü der Konsolenanwendung dar und verarbeitet
-    // die Auswahl des Benutzers.
     public class MainMenu
     {
-        ConsoleFormatter consoleFormatter = new ConsoleFormatter();
+        private readonly ConsoleFormatter _consoleFormatter = new();
 
         public async Task ShowAsync()
         {
             bool running = true;
+
             while (running)
             {
-                Console.Clear();
+                AnsiConsole.Clear();
 
-                Log.Information("Displaying the main menu.");
-                consoleFormatter.PrintHeader("OCR Benchmark - Hauptmenü");
-                Console.WriteLine();
-                Console.WriteLine("1. Vergleich starten");
-                Console.WriteLine("2. Beenden");
-                Console.WriteLine();
-                Console.Write("Auswahl: ");
+                _consoleFormatter.PrintHeader(
+                    "OCR Benchmark - Hauptmenü");
 
-                string? userInput = Console.ReadLine();
+                string selection = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[cyan]Was möchtest du tun?[/]")
+                        .AddChoices(
+                            "Vergleich starten",
+                            "Beenden"));
 
-                switch (userInput)
+                switch (selection)
                 {
-                    case "1":
-                        // Start the OCR Benchmark
-                        var _ComparisonMenu = new ComparisonMenu();
-                        await _ComparisonMenu.StartComparisonAsync();
+                    case "Vergleich starten":
+                        Log.Information(
+                            "Starting OCR benchmark.");
+
+                        var comparisonMenu = new ComparisonMenu();
+
+                        await comparisonMenu.StartComparisonAsync();
                         break;
-                    case "2":
-                        // Exit the application
-                        Log.Information("Exiting the application.");
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Log.Warning("Invalid menu option selected.");
-                        Console.WriteLine("Ungültige Angabe. Bitte erneut versuchen.");
+
+                    case "Beenden":
+                        Log.Information(
+                            "Exiting the application.");
+
+                        running = false;
                         break;
                 }
             }

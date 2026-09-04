@@ -15,6 +15,7 @@ namespace OCR_Tester.OCR.GLM
     {
         private readonly ChatClient _chatClient;
         private readonly string _prompt;
+        public string ModelName => "GLM-OCR";
 
         /// <summary>
         /// Initialisiert eine neue Instanz der <see cref="GlmOcrEngine"/>-Klasse.
@@ -92,7 +93,7 @@ namespace OCR_Tester.OCR.GLM
                 {
                     ModelName = "GLM-OCR",
                     RecognizedText = recognizedText,
-                    ProcessingTimeMs = stopwatch.Elapsed.TotalMilliseconds,
+                    ProcessingTimeMs = (int)stopwatch.Elapsed.TotalMilliseconds,
                     InputTokens = inputTokens,
                     OutputTokens = outputTokens,
                 };
