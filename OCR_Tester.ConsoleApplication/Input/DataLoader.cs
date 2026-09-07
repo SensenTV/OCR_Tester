@@ -57,7 +57,7 @@ namespace OCR_Tester.Input
             return images;
         }
 
-        private List<GroundTruth> LoadGroundTruthFromJson(string folderPath)
+        internal List<GroundTruth> LoadGroundTruthFromJson(string folderPath)
         {
             var groundTruths = new List<GroundTruth>();
 
