@@ -17,7 +17,7 @@
         public int TotalImagesProcessed { get; set; }
 
         // Gesamte Verarbeitungszeit aller Bilder in Millisekunden.
-        public double TotalProcessingTimeMs { get; set; }
+        public int TotalProcessingTimeMs { get; set; }
 
         // Durchschnittliche Verarbeitungszeit pro Bild in Millisekunden.
 

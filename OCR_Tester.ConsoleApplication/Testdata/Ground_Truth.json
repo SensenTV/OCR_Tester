@@ -1,0 +1,66 @@
+{
+    "Image1": {
+        "ImageName": "ocpc-we-kraemer-1.bmp",
+        "ExpectedText": "KRAEMER GERMANY Art. no 340244 Size A-XS Colour Black Description EPIC PRO Back protector:STEEDS Pcs 10 Order NO. 000138380 Carton NO. 199 Barcode 4064547441807 340244 XS S STEEDS Max Protector Yest Epic PRO"
+    },
+    "Image2": {
+        "ImageName": "ocpc-we-kraemer-2.bmp",
+        "ExpectedText": "CARTON SLIP Order # 138869 Carton # 119 Measurements 60Cm X 30Cm X 40Cm (P) Item # 440841 C FZ Colour Frozen Rose Size Cob EAN-Code 4064547065430 Quantity 40 Pcs"
+    },
+    "Image3": {
+        "ImageName": "ocpc-we-kraemer-3.bmp",
+        "ExpectedText": "KRAMER GERMANY ART. NO 741126 SIZE 41 COLOUR BLACK DESCRIPTION STEEDS Smart III Winter PAIRS 6 ORDER NO. 000137263 CARTON NO. 744 / 812 BARCODE 4064547107376"
+    },
+    "Image4": {
+        "ImageName": "ocpc-we-kraemer-4.bmp",
+        "ExpectedText": "KRAEMER GERMANY Art. no 432443 S Size Colour S Description Horse Mane and Tall Brush Pcs 50 Order NO. 000138228 Carton NO. 27 of 30 Barcode 4064547402327>"
+    },
+    "Image5": {
+        "ImageName": "ocpc-we-kraemer-5.bmp",
+        "ExpectedText": "KRAEMER GERMANY ART. NO 750719 SIZE S COLOUR MA DESCRIPTION Felix Bühler Stretch Guertel PCS 100 ORDER NO. 135996 CARTON NO. 17 / 42 BARCODE 47451318 719 S MA"
+    },
+    "Image6": {
+        "ImageName": "ocpc-we-kraemer-6.bmp",
+        "ExpectedText": "KRAMER GERMANY Art. no 231046 Size 3XL Colour NV Description SUGAR DOG DOG PARKA Pcs 20 Order NO. 000136926 Carton NO. Y39 Barcode 4064547346089 231046 3XL NV"
+    },
+    "Image7": {
+        "ImageName": "ocpc-we-kraemer-7.bmp",
+        "ExpectedText": "Krämer Germanx Art. no 653791-M-S Size M Colour S=19-4006TPG Description FB ladies teddy fleece jacket with hood, 100% Polyester, knitted. Pcs 16 Order No. 000136741 Carton No. 37 Barcode 4 064547 611224 653791 M S"
+    },
+    "Image8": {
+        "ImageName": "ocpc-we-kraemer-8.bmp",
+        "ExpectedText": "Carton No: 7994 Marka:GE/182 Carton No. 7994 From: KANPUR., India 862 F SS Full 4064547574741 To: Hamburg, Germany Black Order No. Party's Code Our Product Code Colour Size Qty. 000134915 320862 F SS S409-597-19 Black Full 20 For Export Only [149/182]"
+    },
+    "Image9": {
+        "ImageName": "ocpc-we-kraemer-9.bmp",
+        "ExpectedText": "KRAMER GERMANY Art. No. 422661-135-TG Size 135CM Colour TG=TG(19-4914 TPG) Description TM FLEECE RUG ECONOMIC 230GSM POLAR FLEECE PCS 7 Order No. 000138490 Carton No. SI-4015 Barcode 4 064547 586317"
+    },
+    "Image10": {
+        "ImageName": "ocpc-we-kraemer-10.bmp",
+        "ExpectedText": "KRAEMER Item no.: 741259 Name of item:STEEDS Winter Rider Midcut II Color: BLACK Size: 39# Qty: 10 PAIRS Carton no. 112/184 Barcode 4064547390518"
+    },
+    "Image11": {
+        "ImageName": "ocpc-we-kraemer-11.bmp",
+        "ExpectedText": "KRAEMER GERMANY Art. no. 621604-S Size Colour S Description Bag Pcs 15 Order no. 000133789 Carton no. 41 Barcode 4064547334574 621604-S"
+    },
+    "Image12": {
+        "ImageName": "ocpc-we-kraemer-12.bmp",
+        "ExpectedText": "Krämer Germany Art. No. 810673-M-S Size M Colour S 19-4006 TPX Description FB ladies padded riding skirt with 2-way vision zipper on one side, two hidden zip pockets on front, long riding slit with hidden zipper on CB 100% Nylon,woven. Pcs 25 Order No. 000132296 Carton No. 606 Barcode 4064547363215 810673 M S"
+    },
+    "Image13": {
+        "ImageName": "ocpc-we-kraemer-13.bmp",
+        "ExpectedText": "GERMANY Art.no:780345 M BR Size: M Color: Brown Description Helmet Pcs 9 Order no.138888 Carton no.446 Barcode: 780345 M BR 4064547526563"
+    },
+    "Image14": {
+        "ImageName": "ocpc-we-kraemer-14.bmp",
+        "ExpectedText": "KRAMER GERMANY Art.no 653775 Size M Colour CF Description FELIX BÜHLER padded vest with big collar Pcs 10 Order no. 000136559 Carton no. 1320 Barcode 653775 M CF 4064547601935"
+    },
+    "Image15": {
+        "ImageName": "ocpc-we-kraemer-15.bmp",
+        "ExpectedText": "KRAEMER GERMANY Art. no. 740774 Size 35 Colour BLACK Description START II WINTER Pcs 10 Order no. 000136987 Carton no. 1564 / 2377 Barcode 4053222550750"
+    },
+    "Image16": {
+        "ImageName": "ocpc-we-kraemer-16.bmp",
+        "ExpectedText": "KRAMER GERMANY Art.no 653774 Size S Colour CF Description FELIX BÜHLER jacket Pcs 10 Order no. 000136455 Carton no. C 154 Barcode 653774 S CF 4 06457601638"
+    }
+}

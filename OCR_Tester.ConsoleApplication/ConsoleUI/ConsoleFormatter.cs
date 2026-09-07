@@ -204,6 +204,7 @@ namespace OCR_Tester.ConsoleUI
 
             table.AddColumn("Modell");
             table.AddColumn("Bilder");
+            table.AddColumn("Gesamtzeit");
             table.AddColumn("Ø Zeit");
             table.AddColumn("Ø CER");
             table.AddColumn("Input Tokens");
@@ -214,6 +215,7 @@ namespace OCR_Tester.ConsoleUI
                 table.AddRow(
                     Markup.Escape(summary.ModelName),
                     summary.TotalImagesProcessed.ToString(),
+                    $"{summary.TotalProcessingTimeMs} ms",
                     $"{summary.AverageProcessingTimeMs:F2} ms",
                     GetCerMarkup(summary.OverallCharacterErrorRate),
                     summary.TotalInputTokens.ToString(),

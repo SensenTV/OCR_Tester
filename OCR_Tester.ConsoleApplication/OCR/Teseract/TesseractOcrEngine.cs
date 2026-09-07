@@ -84,7 +84,7 @@ namespace OCR_Tester.OCR.Tesseract
                 {
                     ModelName = "Tesseract",
                     RecognizedText = recognizedText,
-                    ProcessingTimeMs = (int)stopwatch.Elapsed.TotalMilliseconds,
+                    ProcessingTimeMs = stopwatch.Elapsed.Milliseconds,
                 };
 
                 return Task.FromResult(result);

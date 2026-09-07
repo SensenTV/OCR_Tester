@@ -17,7 +17,7 @@
         public string RecognizedText { get; set; } = string.Empty;
 
         // Verarbeitungszeit für das Bild in Millisekunden.
-        public double ProcessingTimeMs { get; set; }
+        public int ProcessingTimeMs { get; set; }
 
         // Anzahl der verwendeten Eingabetokens.
         // Bei Tesseract nicht verfügbar und daher 0.

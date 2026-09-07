@@ -122,7 +122,7 @@ namespace OCR_Tester.OCR.GLM
                 {
                     ModelName = "GLM-OCR",
                     RecognizedText = recognizedText,
-                    ProcessingTimeMs = (int)stopwatch.Elapsed.TotalMilliseconds,
+                    ProcessingTimeMs = stopwatch.Elapsed.Milliseconds,
                     InputTokens = inputTokens,
                     OutputTokens = outputTokens,
                 };
