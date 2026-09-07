@@ -70,7 +70,7 @@ namespace OCR_Tester.OCR.Tesseract
             try
             {
                 using var engine = new TesseractEngine(_tessDataPath, _language, _engineMode);
-
+        
                 engine.DefaultPageSegMode = _pageSegmentationMode;
 
                 using var image = Pix.LoadFromFile(testCase.ImagePath);

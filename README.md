@@ -22,72 +22,47 @@ Das Projekt ist modular aufgebaut, sodass weitere OCR-Engines möglichst einfach
 
 ## Inhaltsverzeichnis
 
-* [Über das Projekt](#über-das-projekt)
-* [Ziele](#ziele)
-* [Features](#features)
-* [Technologien](#technologien)
-* [Projektstruktur](#projektstruktur)
-* [Architektur](#architektur)
-* [Unterstützte OCR-Engines](#unterstützte-ocr-engines)
-* [Konfiguration](#konfiguration)
-* [API-Key konfigurieren](#api-key-konfigurieren)
-* [Testdaten](#testdaten)
-* [Ground Truth](#ground-truth)
-* [Benchmark-Ablauf](#benchmark-ablauf)
-* [Character Error Rate](#character-error-rate)
-* [Ergebnisdateien](#ergebnisdateien)
-* [Konsolenausgabe](#konsolenausgabe)
-* [Installation](#installation)
-* [Projekt starten](#projekt-starten)
-* [Tests ausführen](#tests-ausführen)
-* [Neue OCR-Engine hinzufügen](#neue-ocr-engine-hinzufügen)
-* [Logging](#logging)
-* [Fehlerbehandlung](#fehlerbehandlung)
-* [Git und Testdaten](#git-und-testdaten)
-* [Bekannte Einschränkungen](#bekannte-einschränkungen)
-* [Weiterentwicklung](#weiterentwicklung)
-
----
-
-# Über das Projekt
-
-OCR steht für **Optical Character Recognition** und bezeichnet die automatische Erkennung von Text aus Bildern.
-
-Das Ziel von `OCR_Tester` ist nicht lediglich zu prüfen, ob eine OCR-Engine Text erkennen kann. Stattdessen soll eine reproduzierbare Möglichkeit geschaffen werden, mehrere OCR-Systeme anhand derselben Bilder und derselben erwarteten Texte miteinander zu vergleichen.
-
-Dafür wird jedem Testbild ein sogenannter **Ground-Truth-Text** zugeordnet.
-
-Beispielsweise:
-
-```text
-Bild:
-rechnung_001.png
-
-Erwarteter Text:
-Rechnung
-Max Mustermann
-Gesamtbetrag: 123,45 €
-```
-
-Eine OCR-Engine verarbeitet anschließend das Bild und liefert beispielsweise:
-
-```text
-Rechnung
-Max Musterman
-Gesamtbetrag: 123,45 €
-```
-
-Der erkannte Text wird anschließend mit dem erwarteten Text verglichen.
-
-Dadurch kann beispielsweise festgestellt werden, dass ein Zeichen fehlt:
-
-```text
-Erwartet:  Max Mustermann
-Erkannt:   Max Musterman
-                    ^
-```
-
-Dieser Fehler fließt in die Character Error Rate ein.
+- [OCR\_Tester](#ocr_tester)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+- [Ziele](#ziele)
+    - [1. Vergleichbarkeit](#1-vergleichbarkeit)
+    - [2. Objektive Bewertung](#2-objektive-bewertung)
+    - [3. Erweiterbarkeit](#3-erweiterbarkeit)
+    - [4. Konfigurierbarkeit](#4-konfigurierbarkeit)
+    - [5. Reproduzierbare Benchmarks](#5-reproduzierbare-benchmarks)
+    - [6. Trennung der Verantwortlichkeiten](#6-trennung-der-verantwortlichkeiten)
+- [Features](#features)
+- [Technologien](#technologien)
+- [Architektur](#architektur)
+- [OCR-Abstraktion](#ocr-abstraktion)
+- [Unterstützte OCR-Engines](#unterstützte-ocr-engines)
+  - [Tesseract](#tesseract)
+  - [GLM-OCR](#glm-ocr)
+- [Konfiguration](#konfiguration)
+- [OCR Engine Factory](#ocr-engine-factory)
+- [Testdaten](#testdaten)
+- [Ground Truth](#ground-truth)
+- [ImageTestCase](#imagetestcase)
+- [Character Error Rate](#character-error-rate)
+- [CER Calculator](#cer-calculator)
+- [Benchmark Summary](#benchmark-summary)
+- [Einzelnes OCR-Ergebnis](#einzelnes-ocr-ergebnis)
+- [Ergebnisdateien](#ergebnisdateien)
+- [SummaryResults.json](#summaryresultsjson)
+- [Konsolenausgabe](#konsolenausgabe)
+- [Installation](#installation)
+  - [Voraussetzungen](#voraussetzungen)
+- [Repository klonen](#repository-klonen)
+- [Projekt wiederherstellen](#projekt-wiederherstellen)
+- [API-Key in C#](#api-key-in-c)
+- [TESSDATA\_PREFIX](#tessdata_prefix)
+- [Projekt starten](#projekt-starten)
+- [Benchmark starten](#benchmark-starten)
+- [Neue OCR-Engine hinzufügen](#neue-ocr-engine-hinzufügen)
+- [Logging](#logging)
+- [Bekannte Einschränkungen](#bekannte-einschränkungen)
+  - [Tesseract und komplexe Tabellen](#tesseract-und-komplexe-tabellen)
+- [Reproduzierbarkeit](#reproduzierbarkeit)
 
 ---
 
@@ -109,7 +84,7 @@ Neue OCR-Engines sollen möglichst einfach hinzugefügt werden können.
 
 ### 4. Konfigurierbarkeit
 
-Engine-spezifische Einstellungen sollen nicht fest im Programmcode hinterlegt werden.
+Engine-spezifische Einstellungen sollen nicht mehrmals fest im Programmcode hinterlegt werden, sondern alle Einstellungen werden über die appsettings vorgenommen
 
 ### 5. Reproduzierbare Benchmarks
 
@@ -125,10 +100,10 @@ OCR-Verarbeitung, Evaluation, Dateiverarbeitung, Konfiguration und Konsolenausga
 
 Aktuell bietet das Projekt unter anderem:
 
-* Vergleich mehrerer OCR-Engines
+* Vergleich zweier schon implementierter OCR-Engines
+  * GLM-OCR
+  * Tesseract
 * zentrale Konfiguration über `appsettings.json`
-* Unterstützung von Tesseract
-* Unterstützung von GLM-OCR
 * einheitliches `IOcrEngine`-Interface
 * OCR-Engine-Factory
 * automatische Berechnung der Character Error Rate
@@ -158,76 +133,8 @@ Das Projekt basiert auf folgenden Technologien:
 | xUnit                              | Unit-Tests             |
 | System.Text.Json                   | JSON-Verarbeitung      |
 | Tesseract                          | klassische OCR         |
-| GLM-OCR                            | KI-basierte OCR        |
+| GLM-OCR                            | generative OCR         |
 | Microsoft.Extensions.Configuration | Konfiguration          |
-
----
-
-# Projektstruktur
-
-Eine mögliche Struktur des Projekts sieht folgendermaßen aus:
-
-```text
-OCR_Tester/
-│
-├── Configuration/
-│   └── appsettings.json
-│
-├── ConsoleUI/
-│   ├── ConsoleFormatter.cs
-│   ├── MainMenu.cs
-│   └── ComparisonMenu.cs
-│
-├── Application/
-│   └── ComparisonRunner.cs
-│
-├── Domain/
-│   ├── Interfaces/
-│   │   ├── IOcrEngine.cs
-│   │   └── IEvaluationService.cs
-│   │
-│   └── Models/
-│       ├── Image.cs
-│       ├── GroundTruth.cs
-│       ├── ImageTestCase.cs
-│       ├── OcrResult.cs
-│       ├── SingleBenchmark.cs
-│       ├── BenchmarkSummary.cs
-│       └── BenchmarkModelSummary.cs
-│
-├── Evaluation/
-│   ├── CerCalculator.cs
-│   └── BenchmarkSummaryCalculator.cs
-│
-├── Input/
-│   └── DataLoader.cs
-│
-├── OCR/
-│   ├── GLM/
-│   │   └── GlmOcrEngine.cs
-│   │
-│   └── Tesseract/
-│       └── TesseractOcrEngine.cs
-│
-├── Output/
-│   └── JsonResultWriter.cs
-│
-├── Data/
-│   └── ...
-│
-├── Results/
-│   └── ...
-│
-├── Tests/
-│   ├── CerCalculatorTests.cs
-│   └── DataLoaderTests.cs
-│
-├── AssemblyInfo.cs
-├── Program.cs
-└── README.md
-```
-
-Die genaue Ordnerstruktur kann sich im Laufe der Entwicklung ändern.
 
 ---
 
@@ -237,56 +144,7 @@ Die Anwendung verwendet mehrere klar getrennte Komponenten.
 
 Der grundsätzliche Ablauf ist:
 
-```text
-                    ┌─────────────────────┐
-                    │     MainMenu        │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │  ComparisonMenu     │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ ComparisonRunner    │
-                    └──────────┬──────────┘
-                               │
-             ┌─────────────────┼─────────────────┐
-             │                 │                 │
-             ▼                 ▼                 ▼
-      ┌─────────────┐  ┌──────────────┐  ┌─────────────┐
-      │ DataLoader  │  │ EngineFactory│  │ Configuration│
-      └─────────────┘  └──────┬───────┘  └─────────────┘
-                               │
-                    ┌──────────┴──────────┐
-                    │                     │
-                    ▼                     ▼
-             ┌─────────────┐       ┌─────────────┐
-             │ GLM-OCR      │       │ Tesseract   │
-             └─────────────┘       └─────────────┘
-                    │                     │
-                    └──────────┬──────────┘
-                               ▼
-                    ┌─────────────────────┐
-                    │    OcrResult        │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   CerCalculator     │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ SummaryCalculator   │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ JsonResultWriter    │
-                    └─────────────────────┘
-```
+![Programmablauf](docs\images\OCR_Tester_Programmablauf.svg)
 
 ---
 
@@ -336,28 +194,38 @@ Die Konfiguration erfolgt beispielsweise über:
 
 ```json
 {
-  "Name": "Tesseract",
-  "Type": "Tesseract",
-  "TessDataPath": "tessdata",
-  "Language": "deu+eng",
-  "EngineMode": "TesseractOnly"
+    "Name": "Tesseract",
+    "Type": "Tesseract",
+    "TessDataPath": "tessdata",
+    "Language": "deu+eng",
+    "EngineMode": "TesseractOnly",
+    "PageSegmentationMode": "SingleColumn", OsdOnly, AutoOsd, AutoOnly, Auto
+    "CPU": "AMD Ryzen 7 7735U",
+    "RAM": "16 GB"
 }
 ```
-
-Dabei können unter anderem Sprache und Page Segmentation Mode konfiguriert werden.
-
-### Beispiel
-
-```text
-TessDataPath:
-tessdata
-
-Language:
-deu+eng
-```
-
-`deu+eng` ermöglicht die Verarbeitung deutscher und englischer Zeichen bzw. Wörter.
-
+* **TessDataPath:** Pfad in dem die Trainingsdaten enthalten sind
+* **Language:** ermöglicht die Verarbeitung deutscher und englischer Zeichen bzw. Wörter
+* **EngineMode:** Methodic für OCR Verfahren;
+  * Default: Tesseract entscheidet selbst. Aktuell wird dabei die LSTM-OCR-Engine verwendet.
+  * LstmOnly: Verwendet ausschließlich die neuere, auf neuronalen Netzen
+  * TesseractAndLstm: Verwendet sowohl die klassische Tesseract-Engine als auch die neue LSTM-Engine.
+  * TesseractOnly: Verwendet ausschließlich die klassische, ältere Tesseract-OCR-Engine.
+* **PageSegmentationMode:** Hier gibt man die möglichen LayoutAnalysenModus an;
+  * OsdOnly: Erkennt, wie das Bild gedreht ist und welche Schrift verwendet wird. Kein OCR.
+  * AutoOsd: Erkennt automatisch das Seitenlayout und zusätzlich die Ausrichtung/Schrift.
+  * AutoOnly: Analysiert das Seitenlayout, führt aber keine Texterkennung durch.
+  * Auto: Versucht selbstständig herauszufinden, wie Text auf der Seite angeordnet ist.
+  * SingleColumn: Geht davon aus, dass das Bild eine einzelne Textspalte enthält.
+  * SingleBlockVertText: Geht von einem einzelnen Block aus, dessen Text vertikal angeordnet ist.
+  * SingleBlock: Geht davon aus, dass das Bild einen einzigen zusammenhängenden Textblock enthält.
+  * SingleLine: Das gesamte Bild enthält nur eine Textzeile.
+  * SingleWord: Das gesamte Bild enthält nur ein einzelnes Wort.
+  * CircleWord: Das Bild enthält ein Wort, das kreisförmig angeordnet ist.
+  * SingleChar: Das Bild enthält nur ein einzelnes Zeichen.
+  * SparseText: Sucht nach möglichst viel Text, auch wenn dieser ungeordnet und verteilt im Bild steht.
+  * SparseTextOsd: Behandelt das Bild direkt als eine Textzeile und überspringt bestimmte Tesseract-interne Layout-Anpassungen.
+  * RawLine: Kein OCR-Modus. Gibt nur an, wie viele Enum-Werte vorhanden sind.
 ---
 
 ## GLM-OCR
@@ -377,9 +245,52 @@ Beispielkonfiguration:
 }
 ```
 
+* Mögliche Feste Prompts von GLM-OCR:
+  * **"Text Recognition":** Reines Text OCR
+  * **"Formula Recognition":** Extrahiert Formeln und gibt sie im Latex Format zurück
+  * **"Table Recognition":** extrahiert Tabellenstrukturen mit Inhalt und gibt sie als Markdown oder HTML zurück
+  * **Key Information Extraction:** 
+    ```json
+    {
+        请按下列JSON格式输出图中信息: 
+        {
+            "Zu suchender Schlüssel": "..."
+        }
+    }
+    ```
+
 Der API-Key sollte **nicht direkt in `appsettings.json` gespeichert werden**.
 
-Stattdessen wird eine Umgebungsvariable verwendet.
+Stattdessen wird eine Umgebungsvariable in dem Ordner der Konsolenanwendung gesetzt.
+
+```bash
+[Environment]::SetEnvironmentVariable(
+    "GLM_API_KEY", # Den Namen der Variable hier eintragen
+    "dein-api-key", # durch den API Key ersetzen
+    "User" # User genau so stehen lassen
+)
+```
+
+Zum überprüfen ob die Variable gesetzt ist:
+
+```bash
+[Environment]::GetEnvironmentVariable(
+    "GLM_API_KEY", # Den Namen der Variable hier eintragen
+    "User" # User genau so stehen lassen
+)
+```
+
+Zum Löschen:
+
+```powershell
+[Environment]::SetEnvironmentVariable(
+    "GLM_API_KEY",
+    $null,
+    "User"
+)
+```
+
+Nach dem Setzen einer neuen User-Umgebungsvariable sollte die laufende Entwicklungsumgebung neu gestartet werden.
 
 ---
 
@@ -392,31 +303,6 @@ Configuration/appsettings.json
 ```
 
 konfiguriert.
-
-Beispiel:
-
-```json
-{
-  "OcrEngines": [
-    {
-      "Name": "GLM-OCR",
-      "Type": "glm",
-      "Endpoint": "http://localhost:8000/v1",
-      "ApiKey": "",
-      "Model": "zai-org/GLM-OCR",
-      "Prompt": "Extract the text from this image."
-    },
-    {
-      "Name": "Tesseract",
-      "Type": "Tesseract",
-      "TessDataPath": "tessdata",
-      "Language": "deu+eng",
-      "EngineMode": "TesseractOnly",
-      "PageSegmentationMode": 6
-    }
-  ]
-}
-```
 
 Die Konfiguration wird über `Microsoft.Extensions.Configuration` geladen.
 
@@ -461,7 +347,7 @@ Der Vorteil ist, dass `ComparisonRunner` keine konkreten OCR-Klassen instanziier
 
 # Testdaten
 
-Die Testdaten befinden sich im `Data`-Verzeichnis.
+Die Testdaten befinden sich im `Testdata`-Verzeichnis.
 
 Ein Testfall besteht grundsätzlich aus:
 
@@ -473,23 +359,29 @@ Ground Truth
 
 Beispiel:
 
-```text
+```bash
 Data/
 │
-├── Rechnung/
-│   ├── Rechnung_001.png
-│   └── groundtruth.json
+├── Beispiel1/
+│   ├── Bild_001.bmp
+│   └── Ground_Truth.json # Mit den Daten des jeweiligen Bildes
+|
+└── Beispiel2/
+    ├── Bild_002.bmp
+    └── Ground_Truth.json
+
+oder
+
+Data/
 │
-├── Dokumente/
-│   ├── Dokument_001.png
-│   └── groundtruth.json
-│
-└── Tabellen/
-    ├── Tabelle_001.png
-    └── groundtruth.json
+├── Beispielbilder/
+│   ├── Bild_001.bmp
+|   └── Bild_002.bmp
+│ 
+└── Ground_Truth.json # Mit allen Daten
 ```
 
-Die genaue Ordnerstruktur kann abhängig vom verwendeten Datensatz angepasst werden.
+Es wird immer nach Bildern und den zugehörigen Ground_Truth's gesucht, unabhängig von der Ordnerstruktur
 
 ---
 
@@ -501,12 +393,9 @@ Ein mögliches JSON-Format ist:
 
 ```json
 {
-  "Rechnung_001": {
-    "Image": {
-      "ImageName": "Rechnung_001.png",
-      "ImagePath": "Data/Rechnung/Rechnung_001.png"
-    },
-    "ExpectedText": "Rechnung Max Mustermann Gesamtbetrag: 123,45 €"
+  "Bild_001": {
+        "ImageName": "Rechnung_001.png",
+        "ExpectedText": "Rechnung Max Mustermann Gesamtbetrag: 123,45 €"
   }
 }
 ```
@@ -526,8 +415,6 @@ Das Modell enthält unter anderem:
 ```csharp
 public class ImageTestCase
 {
-    public GroundTruth GroundTruth { get; set; } = new();
-
     public string ImageName =>
         GroundTruth.ImageName;
 
@@ -540,118 +427,6 @@ public class ImageTestCase
 ```
 
 Dadurch kann der Benchmark Runner direkt mit einem Testfall arbeiten.
-
----
-
-# Benchmark-Ablauf
-
-Ein Benchmark-Lauf läuft grundsätzlich folgendermaßen ab:
-
-## 1. Konfiguration laden
-
-Die Anwendung liest:
-
-```text
-Configuration/appsettings.json
-```
-
-ein.
-
----
-
-## 2. OCR-Engines erstellen
-
-Für jeden konfigurierten Eintrag wird über die Factory eine OCR-Engine erstellt.
-
-Beispielsweise:
-
-```text
-GLM-OCR
-Tesseract
-```
-
----
-
-## 3. Testdaten laden
-
-Der `DataLoader` lädt alle Testfälle.
-
----
-
-## 4. Benchmark starten
-
-Jedes Bild wird mit jeder konfigurierten OCR-Engine verarbeitet.
-
-Bei:
-
-```text
-100 Bilder
-2 OCR-Engines
-```
-
-entstehen:
-
-```text
-100 × 2 = 200 OCR-Operationen
-```
-
----
-
-## 5. Verarbeitungszeit messen
-
-Für jede OCR-Operation wird die benötigte Zeit erfasst.
-
-Beispiel:
-
-```text
-GLM-OCR
-Processing Time: 842 ms
-```
-
----
-
-## 6. OCR-Ergebnis erfassen
-
-Das Ergebnis wird in einem `OcrResult` gespeichert.
-
-Beispiel:
-
-```text
-Model:
-GLM-OCR
-
-RecognizedText:
-Rechnung Max Musterman
-
-ProcessingTime:
-842 ms
-```
-
----
-
-## 7. CER berechnen
-
-Der erkannte Text wird mit der Ground Truth verglichen.
-
-Dabei wird die Character Error Rate berechnet.
-
----
-
-## 8. Ergebnis speichern
-
-Das Ergebnis des einzelnen Bildes wird als JSON gespeichert.
-
----
-
-## 9. Summary aktualisieren
-
-Der `BenchmarkSummaryCalculator` aktualisiert die zusammengefassten Werte des entsprechenden Modells.
-
----
-
-## 10. Benchmark abschließen
-
-Nach Verarbeitung aller Bilder wird eine Gesamtzusammenfassung erstellt.
 
 ---
 
@@ -678,52 +453,6 @@ Für die Prozentdarstellung:
 ```text
 CER % = Edit Distance / Anzahl Zeichen × 100
 ```
-
-## Beispiel
-
-Ground Truth:
-
-```text
-Hallo Welt
-```
-
-OCR-Ergebnis:
-
-```text
-Hallo Wel
-```
-
-Es fehlt ein Zeichen:
-
-```text
-Hallo Wel[t]
-```
-
-Die Edit Distance beträgt:
-
-```text
-1
-```
-
-Bei einer Ground Truth mit 10 Zeichen ergibt sich:
-
-```text
-CER = 1 / 10
-    = 0,1
-    = 10 %
-```
-
-Je niedriger die CER ist, desto besser.
-
-```text
-0 %   = perfekt
-5 %   = sehr gut
-10 %  = einige Fehler
-50 %  = viele Fehler
-100 % = sehr hohe Fehlerquote
-```
-
-Diese Einteilung dient lediglich als grobe Orientierung. Die tatsächliche Qualität hängt stark vom jeweiligen Datensatz ab.
 
 ---
 
@@ -756,44 +485,19 @@ Während des Benchmark-Laufs werden die Ergebnisse pro Modell zusammengefasst.
 
 Ein `BenchmarkModelSummary` enthält beispielsweise:
 
-```text
-ModelName
-TotalImagesProcessed
-TotalProcessingTimeMs
-AverageProcessingTimeMs
-OverallCharacterErrorRate
-OverallCharacterErrors
-TotalInputTokens
-TotalOutputTokens
-TotalCostInCents
-GraphicsProcessingUnit
-```
-
-Beispiel:
-
-```text
-GLM-OCR
-
-Bilder:
-100
-
-Gesamtzeit:
-82.400 ms
-
-Durchschnitt:
-824 ms
-
-CER:
-4,82 %
-
-Zeichenfehler:
-183
-
-Input Tokens:
-12.500
-
-Output Tokens:
-9.800
+```csharp
+ModelName // Das Modell um das es geht
+TotalImagesProcessed // Gesamtzahl der Bilder die Verarbeitet wurden
+TotalProcessingTimeMs // Gesamtverarbeitungszeit
+AverageProcessingTimeMs // Durchschnittsverarbeitungszeit
+OverallCharacterErrorRate // Gesamt CER in Prozent
+OverallCharacterErrors // Gesamtzahl der Errors
+TotalInputTokens // Gesamtzahl der Eingabe tokens
+TotalOutputTokens // Gesamtzahl der Ausgabe tokens
+GraphicsProcessingUnit // Verwendete GPU
+VRAM // Zur Verfügung stehender VRAM
+CPU // Verwendete CPU
+RAM // Zur Verfügung stehender RAM
 ```
 
 ---
@@ -806,17 +510,20 @@ Beispiel:
 
 ```json
 {
-  "ModelName": "GLM-OCR",
-  "RecognizedText": "Rechnung Max Musterman",
-  "ProcessingTimeMs": 842,
-  "InputTokens": 125,
-  "OutputTokens": 38,
-  "CharacterErrorRate": 1,
-  "CharacterErrorRateInPercent": 4.55
+  "SingleBenchmark": {
+    "CharacterErrorRate": ,
+    "CharacterErrorRateInPercent": 
+  },
+  "CharacterErrorRate": ,
+  "CharacterErrorRateInPercent": ,
+  "ModelName": "",
+  "RecognizedText": "",
+  "ProcessingTimeMs": ,
+  "InputTokens": ,
+  "OutputTokens": ,
+  "TotalTokens": 
 }
 ```
-
-Die genaue JSON-Struktur hängt vom aktuellen Modell ab.
 
 ---
 
@@ -830,10 +537,10 @@ Beispiel:
 Results/
 └── 20260907_112300/
     │
-    ├── Rechnung_001_GLM-OCR_Result.json
-    ├── Rechnung_001_Tesseract_Result.json
-    ├── Rechnung_002_GLM-OCR_Result.json
-    ├── Rechnung_002_Tesseract_Result.json
+    ├── Bild_001_GLM-OCR_Result.json
+    ├── Bild_001_Tesseract_Result.json
+    ├── Bild_002_GLM-OCR_Result.json
+    ├── Bild_002_Tesseract_Result.json
     │
     └── SummaryResults.json
 ```
@@ -858,14 +565,18 @@ Beispiel:
 {
   "Models": [
     {
-      "ModelName": "GLM-OCR",
-      "TotalImagesProcessed": 100,
-      "TotalProcessingTimeMs": 82400,
-      "AverageProcessingTimeMs": 824,
-      "OverallCharacterErrorRate": 4.82,
-      "OverallCharacterErrors": 183,
-      "TotalInputTokens": 12500,
-      "TotalOutputTokens": 9800
+      "ModelName": ,
+      "TotalImagesProcessed": ,
+      "TotalProcessingTimeMs": ,
+      "AverageProcessingTimeMs": ,
+      "OverallCharacterErrorRate": ,
+      "OverallCharacterErrors": ,
+      "TotalInputTokens": ,
+      "TotalOutputTokens": ,
+      "GraphicsProcessingUnit": ,
+      "VRAM": ,
+      "CPU": ,
+      "RAM": 
     }
   ]
 }
@@ -898,44 +609,17 @@ Dadurch muss der eigentliche Benchmark-Code keine Formatierungsdetails enthalten
 
 ---
 
-# Fortschrittsanzeige
-
-Während des Benchmarks zeigt die Anwendung den aktuellen Fortschritt an.
-
-Beispielsweise:
-
-```text
-OCR Benchmark
-████████████████████████████████████████ 75 %
-
-GLM-OCR → Rechnung_075.png
-```
-
-Die maximale Anzahl der Operationen wird aus:
-
-```text
-Anzahl Testfälle × Anzahl OCR-Engines
-```
-
-berechnet.
-
-Dadurch funktioniert die Fortschrittsanzeige unabhängig davon, wie viele Engines oder Bilder konfiguriert sind.
-
----
-
 # Installation
 
 ## Voraussetzungen
 
 Für die Entwicklung werden benötigt:
 
-* .NET SDK
-* Visual Studio oder JetBrains Rider
-* Git
+* [.NET SDK 10.0.400](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
 Je nach verwendeter OCR-Engine können weitere Voraussetzungen notwendig sein.
 
-Für Tesseract werden insbesondere die entsprechenden `tessdata`-Dateien benötigt.
+Für Tesseract werden insbesondere die entsprechenden `tessdata`-Dateien benötigt. Die Standard tessdata sind schon im Projekt vorhanden. Sollten jedoch die `fast` oder `best` genutzt werden wollen müssen diese eigenständig heruntergeladen werden. 
 
 Für GLM-OCR muss ein erreichbarer GLM-OCR-Service vorhanden sein.
 
@@ -975,48 +659,9 @@ dotnet build
 
 ---
 
-# API-Key konfigurieren
-
-API-Keys sollten nicht in `appsettings.json` oder im Git-Repository gespeichert werden.
-
-Für GLM-OCR wird daher eine Umgebungsvariable verwendet.
-
-Unter Windows PowerShell:
-
-```powershell
-[Environment]::SetEnvironmentVariable(
-    "GLM_API_KEY",
-    "dein-api-key",
-    "User"
-)
-```
-
-Anschließend kann der Wert überprüft werden:
-
-```powershell
-[Environment]::GetEnvironmentVariable(
-    "GLM_API_KEY",
-    "User"
-)
-```
-
-Zum Löschen:
-
-```powershell
-[Environment]::SetEnvironmentVariable(
-    "GLM_API_KEY",
-    $null,
-    "User"
-)
-```
-
-Nach dem Setzen einer neuen User-Umgebungsvariable sollte Visual Studio bzw. die laufende Entwicklungsumgebung neu gestartet werden.
-
----
-
 # API-Key in C#
 
-Der Key kann in C# über die Umgebungsvariable geladen werden:
+Der Key kann in C# über die Umgebungsvariable in `ComparisonRunner.cs` geladen werden:
 
 ```csharp
 var apiKey = Environment.GetEnvironmentVariable(
@@ -1025,54 +670,6 @@ var apiKey = Environment.GetEnvironmentVariable(
 ```
 
 Wenn kein Key gefunden wird, sollte die Anwendung einen verständlichen Fehler ausgeben.
-
-Beispiel:
-
-```text
-Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt.
-Setze sie bitte und starte die Anwendung erneut.
-```
-
----
-
-# Tesseract konfigurieren
-
-Tesseract benötigt die entsprechenden Sprachdaten.
-
-Beispielsweise:
-
-```text
-tessdata/
-├── deu.traineddata
-└── eng.traineddata
-```
-
-In der Konfiguration kann anschließend angegeben werden:
-
-```json
-{
-  "TessDataPath": "tessdata",
-  "Language": "deu+eng"
-}
-```
-
----
-
-# Tesseract Page Segmentation Mode
-
-Für unterschiedliche Dokumenttypen können unterschiedliche Page Segmentation Modes sinnvoll sein.
-
-Beispielsweise kann für einfache Tabellen ein Test mit mehreren Modi sinnvoll sein:
-
-```text
-PSM 6
-PSM 4
-PSM 11
-```
-
-Die optimale Einstellung hängt vom Aufbau der Testbilder ab.
-
-Tesseract ist grundsätzlich eine OCR-Engine und kein spezialisiertes Tabellenstruktur-Erkennungssystem. Bei komplexen Tabellen können daher zusätzliche Fehler bei Zeilen-, Spalten- oder Zellstrukturen auftreten.
 
 ---
 
@@ -1105,9 +702,9 @@ Danach sollte die Entwicklungsumgebung neu gestartet werden.
 
 # Projekt starten
 
-Das Projekt kann über Visual Studio gestartet werden.
+Das Projekt kann über eine Dotnet IDE oder Konsole gestartet werden.
 
-Alternativ über die .NET CLI:
+Der Konsolenbefehl ist:
 
 ```bash
 dotnet run
@@ -1115,171 +712,24 @@ dotnet run
 
 Anschließend erscheint das Hauptmenü.
 
-Beispielsweise:
-
-```text
-OCR Benchmark - Hauptmenü
-
-Was möchtest du tun?
-
-> Vergleich starten
-  Beenden
-```
+![MainMenu](docs\images\MainMenu.png)
 
 ---
 
 # Benchmark starten
 
-Nach Auswahl von:
-
-```text
-Vergleich starten
-```
-
+Nach Auswahl von `Vergleich starten` soll der Pfad der Testdaten angegeben werden
 werden:
 
-1. Konfiguration geladen
-2. OCR-Engines erstellt
-3. Testdaten geladen
-4. Benchmark gestartet
-5. OCR-Ergebnisse berechnet
-6. CER berechnet
-7. Einzelergebnisse gespeichert
-8. Summary erstellt
-9. Summary gespeichert
-10. Ergebnisse in der Konsole angezeigt
+![PathWindow](docs\images\PathWindow.png)
 
----
+und danach startet der OCR Ablauf:
 
-# Tests ausführen
+![TestAblauf](docs\images\TestAblauf.png)
 
-Das Projekt verwendet xUnit für Unit-Tests.
+Abschließend wird dann die Zusammenfassung und der Pfad der Ergebnisdateien angezeigt
 
-Alle Tests können über:
-
-```bash
-dotnet test
-```
-
-ausgeführt werden.
-
-Alternativ können Tests direkt in Visual Studio über den Test Explorer gestartet werden.
-
----
-
-# CER-Tests
-
-Der `CerCalculator` wird unter anderem mit folgenden Fällen getestet:
-
-### Identische Texte
-
-```text
-Expected:
-Hello World
-
-OCR:
-Hello World
-
-Ergebnis:
-CER = 0
-```
-
-### Ein Fehler
-
-```text
-Expected:
-Hello World
-
-OCR:
-Hello Wxrld
-
-Ergebnis:
-1 Zeichenfehler
-```
-
-### Fehlendes Zeichen
-
-```text
-Expected:
-Hello World
-
-OCR:
-Hello Wold
-```
-
-### Zusätzliches Zeichen
-
-```text
-Expected:
-Hello World
-
-OCR:
-Hello Woorld
-```
-
-### Leere Strings
-
-Auch folgende Fälle werden getestet:
-
-```text
-""
-""
-```
-
-sowie:
-
-```text
-""
-"Text"
-```
-
-und:
-
-```text
-"Text"
-""
-```
-
-Dadurch wird sichergestellt, dass die CER-Berechnung auch für Grenzfälle korrekt funktioniert.
-
----
-
-# DataLoader-Tests
-
-Auch der `DataLoader` wird mit Unit-Tests überprüft.
-
-Getestet werden unter anderem:
-
-* gültige JSON-Datei
-* ungültige JSON-Datei
-* fehlende Bildreferenz
-* leerer Ground-Truth-Text
-
-Für Tests werden temporäre Verzeichnisse und JSON-Dateien erzeugt.
-
-Die Testdaten werden nach Abschluss des Tests wieder entfernt.
-
----
-
-# InternalsVisibleTo
-
-Wenn interne Methoden direkt getestet werden sollen, kann die Test-Assembly über `InternalsVisibleTo` Zugriff erhalten.
-
-Dafür befindet sich beispielsweise im Hauptprojekt:
-
-```text
-AssemblyInfo.cs
-```
-
-mit:
-
-```csharp
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("OCR_Tester.Tests")]
-```
-
-Dadurch können Tests auf `internal`-Methoden zugreifen, ohne diese Methoden öffentlich machen zu müssen.
+![Result](docs\images\Result.png)
 
 ---
 
@@ -1326,214 +776,18 @@ Danach kann sie über `appsettings.json` aktiviert werden:
 
 ```json
 {
-  "Name": "My OCR",
-  "Type": "myocr"
+  "Endpoint": "My OCR",
+  "Prompt": "myocr"
 }
 ```
 
-Der `ComparisonRunner` selbst muss dafür nicht verändert werden.
-
----
-
-# Warum das Interface wichtig ist
-
-Ohne `IOcrEngine` müsste der Runner konkrete Klassen kennen:
-
-```csharp
-var glm = new GlmOcrEngine(...);
-var tesseract = new TesseractOcrEngine(...);
-```
-
-Das würde den Runner mit jeder neuen OCR-Engine komplexer machen.
-
-Mit dem Interface arbeitet der Runner stattdessen allgemein:
-
-```csharp
-foreach (var engine in ocrEngines)
-{
-    var result =
-        await engine.ProcessImageAsync(testCase);
-}
-```
-
-Damit ist die eigentliche Implementierung der OCR-Engine für den Runner irrelevant.
-
----
-
-# Konfigurationsabhängigkeit
-
-Das Projekt verfolgt das Prinzip:
-
-```text
-Code
-  ↓
-generische Logik
-
-Konfiguration
-  ↓
-konkrete Einstellungen
-```
-
-Engine-spezifische Werte wie:
-
-* Endpoint
-* Model
-* Prompt
-* Sprache
-* Tesseract-Modus
-* Page Segmentation Mode
-
-sollten möglichst nicht direkt im Benchmark Runner stehen.
+Im `ComparisonRunner` selbst muss nur der Name der API_Key Umgebungsvariable geändert werden (siehe [API-Key in C#](#api-key-in-c))
 
 ---
 
 # Logging
 
-Für Logging wird Serilog verwendet.
-
-Beispielsweise:
-
-```csharp
-Log.Information(
-    "Sending image to GLM-OCR: {ImagePath}",
-    testCase.ImagePath);
-```
-
-Fehler werden inklusive Exception geloggt:
-
-```csharp
-catch (Exception ex)
-{
-    Log.Error(
-        ex,
-        "Error occurred while processing image: {ImagePath}",
-        testCase.ImagePath);
-
-    throw;
-}
-```
-
-Dadurch bleiben Fehlermeldungen inklusive Stack Trace erhalten.
-
----
-
-# Exception Handling
-
-Auf Ebene der OCR-Engine können Fehler protokolliert und anschließend weitergereicht werden.
-
-Beispielsweise:
-
-```csharp
-catch (Exception ex)
-{
-    Log.Error(
-        ex,
-        "Fehler beim Senden des Bildes an GLM-OCR.");
-
-    throw new InvalidOperationException(
-        "Fehler beim Senden des Bildes an GLM-OCR.",
-        ex);
-}
-```
-
-Durch:
-
-```csharp
-throw;
-```
-
-wird eine Exception unverändert weitergereicht.
-
-Durch:
-
-```csharp
-throw ex;
-```
-
-kann dagegen der ursprüngliche Stack Trace verloren gehen.
-
-Daher sollte grundsätzlich `throw;` verwendet werden, wenn keine neue Exception benötigt wird.
-
----
-
-# Fehlerbehandlung im Benchmark
-
-Die Anwendung kann grundsätzlich zwischen zwei Strategien unterscheiden.
-
-## Fehler beendet Benchmark
-
-Ein schwerwiegender Fehler wird weitergereicht:
-
-```text
-OCR Engine
-    ↓
-Exception
-    ↓
-ComparisonRunner
-    ↓
-Application beendet
-```
-
-Dies ist sinnvoll, wenn ein Benchmark ohne vollständige Ergebnisse keinen Sinn ergibt.
-
-## Fehler überspringt einzelnen Test
-
-Alternativ kann ein Fehler protokolliert und nur das aktuelle Bild übersprungen werden.
-
-Beispielsweise:
-
-```text
-Bild 25:
-GLM-OCR → Fehler
-
-Bild 26:
-GLM-OCR → erfolgreich
-```
-
-Diese Strategie eignet sich besonders für große Testdatensätze.
-
----
-
-# Git
-
-Das Repository sollte keine sensiblen Informationen enthalten.
-
-Insbesondere sollten folgende Inhalte nicht committed werden:
-
-```text
-API Keys
-Secrets
-persönliche Zugangsdaten
-große Testdatensätze
-generierte Benchmark-Ergebnisse
-```
-
----
-
-# .gitignore
-
-Wenn der komplette Testdatenordner nicht versioniert werden soll:
-
-```gitignore
-Data/
-```
-
-Damit wird der gesamte Inhalt von `Data` ignoriert.
-
-Auch generierte Ergebnisse können ignoriert werden:
-
-```gitignore
-Results/
-```
-
-Eine mögliche Konfiguration:
-
-```gitignore
-Data/
-Results/
-bin/
-obj/
-```
+Für Logging wird Serilog verwendet. Die Logdaten werden nach Tagen beschrieben und 7 Tage bleiben erhalten, bis sie gelöscht werden.
 
 ---
 
@@ -1552,60 +806,7 @@ Bei Tabellen können daher Fehler bei:
 
 auftreten.
 
-Für Tabellen sollte deshalb nicht ausschließlich die CER betrachtet werden.
-
----
-
-## CER bewertet nur Text
-
-Die CER misst Unterschiede zwischen zwei Texten.
-
-Sie bewertet nicht direkt:
-
-* Tabellenstruktur
-* Layout
-* Positionen
-* Bounding Boxes
-* Spalten
-* Zeilen
-* Schriftarten
-* Dokumentstruktur
-
-Ein OCR-Modell kann daher eine relativ gute CER besitzen, obwohl die erkannte Dokumentstruktur für einen bestimmten Anwendungsfall ungeeignet ist.
-
----
-
-# Benchmark-Ergebnisse interpretieren
-
-Bei einem Vergleich von OCR-Modellen sollten mehrere Kennzahlen betrachtet werden.
-
-Beispielsweise:
-
-| Kennzahl               | Bedeutung                        |
-| ---------------------- | -------------------------------- |
-| CER                    | Textqualität                     |
-| Durchschnittliche Zeit | Geschwindigkeit                  |
-| Gesamtzeit             | Laufzeit des gesamten Benchmarks |
-| Input Tokens           | Eingabeaufwand eines KI-Modells  |
-| Output Tokens          | erzeugter Textaufwand            |
-| Kosten                 | wirtschaftlicher Vergleich       |
-| GPU                    | verwendete Hardware              |
-
-Ein Modell mit der niedrigsten CER ist daher nicht automatisch das beste Modell.
-
-Beispiel:
-
-```text
-Modell A
-CER: 2 %
-Zeit: 4 Sekunden
-
-Modell B
-CER: 4 %
-Zeit: 0,5 Sekunden
-```
-
-Welches Modell besser ist, hängt vom konkreten Einsatzzweck ab.
+Für Tabellen sollte deshalb nicht ausschließlich die CER betrachtet werden. Mir ist bewusst das dies hier der Fall ist, aber das Ziel dieses Programmes ist es zu verdeutlichen wo die Grenzen klassischer OCR Modelle liegen und Tesseract ist eines der bekanntesten Open-Source Modelle.
 
 ---
 
@@ -1626,205 +827,3 @@ Dazu gehören:
 
 Besonders bei KI-basierten OCR-Modellen sollten Modellversion und Konfiguration dokumentiert werden.
 
----
-
-# Entwicklungsprinzipien
-
-Das Projekt orientiert sich an einigen grundlegenden Prinzipien.
-
-## Single Responsibility
-
-Jede Komponente sollte möglichst eine klar definierte Aufgabe besitzen.
-
-Beispiele:
-
-```text
-DataLoader
-→ Daten laden
-
-CerCalculator
-→ OCR-Qualität bewerten
-
-BenchmarkSummaryCalculator
-→ Ergebnisse aggregieren
-
-JsonResultWriter
-→ Ergebnisse speichern
-
-ConsoleFormatter
-→ Konsolenausgabe formatieren
-
-ComparisonRunner
-→ Benchmark-Ablauf steuern
-```
-
----
-
-## Dependency Inversion
-
-Der Runner arbeitet mit Abstraktionen:
-
-```csharp
-IOcrEngine
-```
-
-statt direkt mit:
-
-```csharp
-GlmOcrEngine
-TesseractOcrEngine
-```
-
-Das erleichtert spätere Erweiterungen.
-
----
-
-# Weiterentwicklung
-
-Mögliche zukünftige Erweiterungen sind:
-
-## Weitere OCR-Modelle
-
-Beispielsweise:
-
-* PaddleOCR
-* EasyOCR
-* weitere Vision-LLMs
-* Cloud-OCR-Dienste
-* lokale Vision-Modelle
-
----
-
-## Weitere Metriken
-
-Neben CER könnten implementiert werden:
-
-* Word Error Rate (WER)
-* Precision
-* Recall
-* F1-Score
-* Normalized Edit Distance
-* Layout Similarity
-* Table Structure Accuracy
-
----
-
-## Parallelisierung
-
-Aktuell können OCR-Operationen sequenziell ausgeführt werden.
-
-Für große Datensätze könnte eine kontrollierte Parallelisierung die Laufzeit deutlich reduzieren.
-
-Dabei muss allerdings auf die jeweilige OCR-Engine geachtet werden, da nicht jede Engine beliebig viele parallele Requests unterstützt.
-
----
-
-## HTML- oder Web-Reports
-
-Die JSON-Ergebnisse könnten später für einen übersichtlichen Report verwendet werden.
-
-Beispielsweise:
-
-```text
-Benchmark Report
-
-┌────────────┬─────────┬──────────┬────────────┐
-│ Modell     │ CER     │ Ø Zeit   │ Bilder     │
-├────────────┼─────────┼──────────┼────────────┤
-│ GLM-OCR    │ 2,41 %  │ 820 ms   │ 100        │
-│ Tesseract  │ 7,83 %  │ 210 ms   │ 100        │
-└────────────┴─────────┴──────────┴────────────┘
-```
-
----
-
-## Grafische Auswertung
-
-Langfristig könnten die Ergebnisse beispielsweise als Diagramme dargestellt werden:
-
-```text
-CER
-
-GLM-OCR     █████
-Tesseract   ███████████████
-```
-
-oder:
-
-```text
-Verarbeitungszeit
-
-GLM-OCR     █████████████
-Tesseract   ███
-```
-
-Dadurch können Qualitäts- und Performance-Unterschiede schneller erkannt werden.
-
----
-
-# Zusammenfassung
-
-`OCR_Tester` stellt eine modulare Benchmark-Plattform für OCR-Systeme dar.
-
-Der zentrale Gedanke ist die Trennung von:
-
-```text
-Testdaten
-    ↓
-OCR Engine
-    ↓
-OCR Result
-    ↓
-Evaluation
-    ↓
-Summary
-    ↓
-JSON / Console
-```
-
-Durch das `IOcrEngine`-Interface können unterschiedliche OCR-Systeme über eine gemeinsame Schnittstelle angesprochen werden.
-
-Die Konfiguration über `appsettings.json` ermöglicht es, OCR-Engines und deren Einstellungen zentral zu verwalten.
-
-Die `CerCalculator`-Komponente sorgt für eine einheitliche Bewertung der OCR-Ergebnisse.
-
-Der `BenchmarkSummaryCalculator` aggregiert die Ergebnisse und ermöglicht dadurch einen direkten Vergleich der Modelle.
-
-Die einzelnen Ergebnisse und die Gesamtzusammenfassung werden als JSON gespeichert, sodass die Daten später unabhängig von der Konsolenanwendung weiterverarbeitet werden können.
-
-Damit bildet das Projekt eine gute Grundlage für einen reproduzierbaren und erweiterbaren Vergleich verschiedener OCR-Technologien.
-
----
-
-# Lizenz
-
-Falls das Projekt öffentlich veröffentlicht wird, sollte hier die verwendete Lizenz angegeben werden.
-
-Beispielsweise:
-
-```text
-MIT License
-```
-
-oder die für das Projekt gewünschte Lizenz.
-
----
-
-# Autor
-
-**OCR_Tester**
-
-Ein C#-Projekt zum Benchmarking und Vergleich verschiedener OCR-Engines.
-
-
-Open-AI API Key setzten:
-
-in dem Ordner der Konsolenanwendung 
-
-```bash
-[Environment]::SetEnvironmentVariable(
-    "GLM_API_KEY",
-    "dein-api-key",
-    "User"
-)
-```
