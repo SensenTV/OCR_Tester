@@ -144,7 +144,7 @@ Die Anwendung verwendet mehrere klar getrennte Komponenten.
 
 Der grundsätzliche Ablauf ist:
 
-![Programmablauf](docs\images\OCR_Tester_Programmablauf.svg)
+![Programmablauf](https://github.com/SensenTV/OCR_Tester/blob/Developement/docs/images/OCR_Tester_Programmablauf.svg)
 
 ---
 
@@ -712,7 +712,7 @@ dotnet run
 
 Anschließend erscheint das Hauptmenü.
 
-![MainMenu](docs\images\MainMenu.png)
+![MainMenu](https://github.com/SensenTV/OCR_Tester/blob/Developement/docs/images/MainMenu.png)
 
 ---
 
@@ -721,15 +721,15 @@ Anschließend erscheint das Hauptmenü.
 Nach Auswahl von `Vergleich starten` soll der Pfad der Testdaten angegeben werden
 werden:
 
-![PathWindow](docs\images\PathWindow.png)
+![PathWindow](https://github.com/SensenTV/OCR_Tester/blob/Developement/docs/images/PathWindow.png)
 
 und danach startet der OCR Ablauf:
 
-![TestAblauf](docs\images\TestAblauf.png)
+![TestAblauf](https://github.com/SensenTV/OCR_Tester/blob/Developement/docs/images/TestAblauf.png)
 
 Abschließend wird dann die Zusammenfassung und der Pfad der Ergebnisdateien angezeigt
 
-![Result](docs\images\Result.png)
+![Result](https://github.com/SensenTV/OCR_Tester/blob/Developement/docs/images/Result.png)
 
 ---
 
