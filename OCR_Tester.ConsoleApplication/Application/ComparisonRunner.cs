@@ -41,6 +41,7 @@ namespace OCR_Tester.Application
             // Komponenten vorbereiten
             // ============================================================
 
+            AppSettings? settings = null;
             var jsonResultWriter = new JsonResultWriter();
             var cerCalculator = new CerCalculator();
             var apiKey = Environment.GetEnvironmentVariable(
@@ -50,6 +51,9 @@ namespace OCR_Tester.Application
             if (string.IsNullOrWhiteSpace(apiKey))
             {
                 Log.Error("API key not found. Exiting the comparison runner.");
+                _consoleFormatter.PrintError(
+                    "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt. Setze sie bitte (Siehe README.md für Details) und starte die Anwendung erneut."
+                );
 
                 throw new InvalidOperationException(
                     "Die Umgebungsvariable 'GLM_API_KEY' ist nicht gesetzt.Setze sie bitte(Siehe README.md für Details) und starte die Anwendung erneut. "
@@ -65,9 +69,10 @@ namespace OCR_Tester.Application
 
             if (testCases.Count == 0)
             {
-                _consoleFormatter.PrintError("Es wurden keine Testfälle gefunden.");
+                _consoleFormatter.PrintError(
+                    "Es wurden keine Testfälle gefunden. Überprüfe ob der angegebene Ordner BMP-Bilder und die zugehörigen Ground-Truth-JSON-Dateien enthält."
+                );
                 Log.Warning("No test cases found. Exiting the comparison runner.");
-
                 return;
             }
 
@@ -75,18 +80,31 @@ namespace OCR_Tester.Application
             // Konfiguration laden
             // ============================================================
 
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("Configuration/appsettings.json", optional: false)
-                .Build();
-
-            var settings = configuration.Get<AppSettings>();
-            if (settings == null)
+            try
             {
-                Log.Error("Failed to load configuration. Exiting the comparison runner.");
-                throw new InvalidOperationException(
-                    "Die AppSettings konnten nicht geladen werden."
+                Log.Information("Loading configuration from appsettings.json...");
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("Configuration/appsettings.json", optional: false)
+                    .Build();
+
+                settings = configuration.Get<AppSettings>();
+                if (settings == null)
+                {
+                    Log.Error("Failed to load configuration. Exiting the comparison runner.");
+                    _consoleFormatter.PrintError(
+                        "Fehler beim Laden der Konfiguration. Die appsettings.json-Datei scheint leer zu sein. Bitte überprüfen Sie die Datei."
+                    );
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error occurred while loading configuration.");
+                _consoleFormatter.PrintError(
+                    "Fehler beim Laden der Konfiguration. Die appsettings.json-Datei scheint nicht korrekt zu sein. Bitte überprüfen Sie die Datei."
                 );
+                return;
             }
 
             // ============================================================

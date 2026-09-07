@@ -73,6 +73,7 @@ namespace OCR_Tester.OCR.GLM
         public async Task<OcrResult> ProcessImageAsync(ImageTestCase testCase)
         {
             var stopwatch = Stopwatch.StartNew();
+            ChatCompletion? completion = null;
 
             try
             {
@@ -88,7 +89,26 @@ namespace OCR_Tester.OCR.GLM
                     ]),
                 ];
 
-                ChatCompletion completion = await _chatClient.CompleteChatAsync(messages);
+                try
+                {
+                    Log.Information(
+                        "Sending image to GLM-OCR for processing: {ImagePath}",
+                        testCase.ImagePath
+                    );
+                    completion = await _chatClient.CompleteChatAsync(messages);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(
+                        ex,
+                        "Error occurred while sending image to GLM-OCR: {ImagePath}",
+                        testCase.ImagePath
+                    );
+                    throw new InvalidOperationException(
+                        $"Fehler beim Senden des Bildes an GLM-OCR: {testCase.ImagePath}. Überprüfe die appsettings.json, ob alle Einstellungen korrekt sind.",
+                        ex
+                    );
+                }
 
                 stopwatch.Stop();
 
