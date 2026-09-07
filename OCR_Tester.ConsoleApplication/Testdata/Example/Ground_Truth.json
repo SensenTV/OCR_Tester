@@ -1,0 +1,6 @@
+{
+    "Image1": {
+        "ImageName": "image.bmp",
+        "ExpectedText": "GLM-OCR supports standard text, formula, and table recognition prompts, alongside custom JSON schemas for structured information extraction. Supported Prompt Types Text Recognition: Use \"Text Recognition:\" to extract raw or dense text content in plain text format.Formula Recognition: Use \"Formula Recognition:\" to steer the model into converting mathematical expressions into LaTeX.Table Recognition: Use \"Table Recognition:\" to recover table structures and align rows/columns into Markdown or HTML sequences.Information Extraction (JSON): Provide a strict, custom JSON schema prompt (e.g., 请按下列JSON格式输出图中信息: {...}) to extract specific key-value pairs from IDs, receipts, or forms. You can check the Z.AI Developer Documentation or the official GLM-OCR Hugging Face repository for further schema guidelines and implementation examples. If you'd like, let me know:"
+    }
+}
