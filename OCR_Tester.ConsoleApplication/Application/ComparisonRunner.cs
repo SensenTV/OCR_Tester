@@ -36,14 +36,13 @@ namespace OCR_Tester.Application
             );
 
             Directory.CreateDirectory(resultsDirectory);
-            
+
             // ============================================================
             // Komponenten vorbereiten
             // ============================================================
 
             var jsonResultWriter = new JsonResultWriter();
             var cerCalculator = new CerCalculator();
-            var summaryCalculator = new BenchmarkSummaryCalculator();
             var apiKey = Environment.GetEnvironmentVariable(
                 "GLM_API_KEY",
                 EnvironmentVariableTarget.User
@@ -96,6 +95,11 @@ namespace OCR_Tester.Application
             settings
                 .OcrEngines.First(x => x.Type.Equals("glm", StringComparison.OrdinalIgnoreCase))
                 .ApiKey = apiKey;
+
+            // ============================================================
+            // BenchmarkSummaryCalculator initialisieren
+            // ============================================================
+            var summaryCalculator = new BenchmarkSummaryCalculator(settings);
 
             // ============================================================
             // OCR-Engines erstellen

@@ -28,5 +28,13 @@ namespace OCR_Tester.Configuration
         public Tesseract.EngineMode EngineMode { get; set; }
 
         public Tesseract.PageSegMode PageSegmentationMode { get; set; }
+
+        public string GraphicsProcessingUnit { get; set; } = string.Empty;
+
+        public string VRAM { get; set; } = string.Empty;
+
+        public string CPU { get; set; } = string.Empty;
+
+        public string RAM { get; set; } = string.Empty;
     }
 }

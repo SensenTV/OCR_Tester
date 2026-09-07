@@ -20,6 +20,7 @@
         public double TotalProcessingTimeMs { get; set; }
 
         // Durchschnittliche Verarbeitungszeit pro Bild in Millisekunden.
+
         public double AverageProcessingTimeMs { get; set; }
 
         // Durchschnittliche CER über alle Bilder in Prozent.
@@ -33,5 +34,10 @@
 
         // Gesamtanzahl der erzeugten Ausgabetokens.
         public int TotalOutputTokens { get; set; }
+
+        public string GraphicsProcessingUnit { get; set; } = string.Empty;
+        public string VRAM { get; set; } = string.Empty;
+        public string CPU { get; set; } = string.Empty;
+        public string RAM { get; set; } = string.Empty;
     }
 }
