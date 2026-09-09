@@ -200,7 +200,7 @@ namespace OCR_Tester.ConsoleUI
             var table = new Table()
                 .Border(TableBorder.Rounded)
                 .BorderColor(Color.Cyan)
-                .Title("[bold cyan]OCR Benchmark Ergebnisse[/]");
+                .Title("[bold cyan]OCR Benchmark - Ergebnisse[/]");
 
             table.AddColumn("Modell");
             table.AddColumn("Bilder");

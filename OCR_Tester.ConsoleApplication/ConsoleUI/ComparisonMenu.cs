@@ -1,6 +1,6 @@
-﻿using Spectre.Console;
-using OCR_Tester.Application;
+﻿using OCR_Tester.Application;
 using Serilog;
+using Spectre.Console;
 
 namespace OCR_Tester.ConsoleUI
 {
@@ -13,7 +13,7 @@ namespace OCR_Tester.ConsoleUI
         {
             AnsiConsole.Clear();
 
-            _consoleFormatter.PrintHeader("OCR-Vergleich");
+            _consoleFormatter.PrintHeader("OCR Benchmark - Vergleich");
 
             Log.Information("Starting OCR comparison.");
             await _comparisonRunner.RunComparisonAsync();
