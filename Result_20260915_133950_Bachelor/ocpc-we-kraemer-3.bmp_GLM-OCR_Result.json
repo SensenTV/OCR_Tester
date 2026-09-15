@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 22,
+  "CharacterErrorRateInPercent": 14.01,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAMER\nGERMANY\nART. NO. 741126\nSIZE 41\nCOLOUR BLACK\nDESCRIPTION STEEDS Smart HI Winter\nPAIRS 6\nORDER NO. 000137263\nCARTON NO. 744 / 812\nBARCODE 4 004547 107376",
+  "ExpectedText": "KRAMER GERMANY ART. NO 741126 SIZE 41 COLOUR BLACK DESCRIPTION STEEDS Smart III Winter PAIRS 6 ORDER NO. 000137263 CARTON NO. 744 / 812 BARCODE 4064547107376",
+  "ProcessingTimeMs": 841,
+  "InputTokens": 620,
+  "OutputTokens": 98,
+  "TotalTokens": 718
+}

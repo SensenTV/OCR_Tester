@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 43,
+  "CharacterErrorRateInPercent": 27.92,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nGERMANY\nArt.no 432443 S\nSize\nColour S\nDescription Horse mane and Tail Brush\nPgs 60\nOrder No. 00813828\nCarton no. 27 Of 30\nBarcode",
+  "ExpectedText": "KRAEMER GERMANY Art. no 432443 S Size Colour S Description Horse Mane and Tall Brush Pcs 50 Order NO. 000138228 Carton NO. 27 of 30 Barcode 4064547402327\u003E",
+  "ProcessingTimeMs": 136,
+  "InputTokens": 620,
+  "OutputTokens": 70,
+  "TotalTokens": 690
+}

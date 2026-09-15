@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 48,
+  "CharacterErrorRateInPercent": 35.04,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "Art.no:780345 M BR\nSize: M\nColor: Brown\nDescription Helmet\nPcs 9\nOrder no.138888\nCarton no.446\nBarcode:",
+  "ExpectedText": "GERMANY Art.no:780345 M BR Size: M Color: Brown Description Helmet Pcs 9 Order no.138888 Carton no.446 Barcode: 780345 M BR 4064547526563",
+  "ProcessingTimeMs": 913,
+  "InputTokens": 620,
+  "OutputTokens": 51,
+  "TotalTokens": 671
+}

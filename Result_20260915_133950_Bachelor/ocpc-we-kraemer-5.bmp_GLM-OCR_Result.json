@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 44,
+  "CharacterErrorRateInPercent": 27.85,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "MATER\nGERMANY\nART. NO. 750 719\nSIZE 5\nCOLOUR MA\nDESCRIPTION Felix B\u00FChler Stretch Guertel\nPCS 100\nORDER NO. 135996\nCARTON NO. 17/42\nBARCODE",
+  "ExpectedText": "KRAEMER GERMANY ART. NO 750719 SIZE S COLOUR MA DESCRIPTION Felix B\u00FChler Stretch Guertel PCS 100 ORDER NO. 135996 CARTON NO. 17 / 42 BARCODE 47451318 719 S MA",
+  "ProcessingTimeMs": 142,
+  "InputTokens": 620,
+  "OutputTokens": 78,
+  "TotalTokens": 698
+}

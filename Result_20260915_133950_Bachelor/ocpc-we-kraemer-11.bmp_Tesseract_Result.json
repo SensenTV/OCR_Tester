@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 132,
+  "CharacterErrorRateInPercent": 97.78,
+  "ModelName": "Tesseract",
+  "RecognizedText": "   \n",
+  "ExpectedText": "KRAEMER GERMANY Art. no. 621604-S Size Colour S Description Bag Pcs 15 Order no. 000133789 Carton no. 41 Barcode 4064547334574 621604-S",
+  "ProcessingTimeMs": 251,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

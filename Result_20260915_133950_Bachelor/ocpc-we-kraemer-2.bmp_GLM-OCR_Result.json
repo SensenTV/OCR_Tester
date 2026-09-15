@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 20,
+  "CharacterErrorRateInPercent": 12.42,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "CARTON SLIP\n\nOrder # 138869\nCarton # 119\nMeasurement 60Cm X 30Cm X 40Cm (P)\nItem # 440841 C FZ\nColour Frozen Rose\nSize Cab\nEAN-Code 4064547065430\nQuantity 40 Pes",
+  "ExpectedText": "CARTON SLIP Order # 138869 Carton # 119 Measurements 60Cm X 30Cm X 40Cm (P) Item # 440841 C FZ Colour Frozen Rose Size Cob EAN-Code 4064547065430 Quantity 40 Pcs",
+  "ProcessingTimeMs": 331,
+  "InputTokens": 620,
+  "OutputTokens": 95,
+  "TotalTokens": 715
+}

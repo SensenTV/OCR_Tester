@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 242,
+  "CharacterErrorRateInPercent": 96.41,
+  "ModelName": "Tesseract",
+  "RecognizedText": "g ( .\n\n: \u201C\u0027! ARD-\u00AB\u2018 \u201E.\u201C\n\n \n\n \n",
+  "ExpectedText": "Carton No: 7994 Marka:GE/182 Carton No. 7994 From: KANPUR., India 862 F SS Full 4064547574741 To: Hamburg, Germany Black Order No. Party\u0027s Code Our Product Code Colour Size Qty. 000134915 320862 F SS S409-597-19 Black Full 20 For Export Only [149/182]",
+  "ProcessingTimeMs": 244,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

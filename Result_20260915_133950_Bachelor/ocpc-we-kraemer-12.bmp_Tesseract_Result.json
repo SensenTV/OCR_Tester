@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 183,
+  "CharacterErrorRateInPercent": 59.03,
+  "ModelName": "Tesseract",
+  "RecognizedText": "FB Met padded n\u0027ding skin with\n2m vision zipper on one side, Mo ,\nhidden im pockets on from. long i\n\u2018 riding siii with hodden vision Zipper on\n\u201E 4GB 1002u\uFB02\uFB02WMm, \u201E\u201E- J\nPcs \u2018 !\n\n7771\n\n| Order No. 000132296\n\nL.\u2014\n\nLCErton No.? 57\nI\n\n_0 \u201A _\u201A\nmum\n\nBarcode m\n\n \n\n \n",
+  "ExpectedText": "Kr\u00E4mer Germany Art. No. 810673-M-S Size M Colour S 19-4006 TPX Description FB ladies padded riding skirt with 2-way vision zipper on one side, two hidden zip pockets on front, long riding slit with hidden zipper on CB 100% Nylon,woven. Pcs 25 Order No. 000132296 Carton No. 606 Barcode 4064547363215 810673 M S",
+  "ProcessingTimeMs": 613,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 124,
+  "CharacterErrorRateInPercent": 78.98,
+  "ModelName": "Tesseract",
+  "RecognizedText": "KRAMER\nGERMANY\n\n\\Rl \\U \u002241116\n\n\u201CI! \u201C\n\n(UIUIR \u201C\\ \\(h\n\nx\u201D V I\u201C \\lnn\u0027 \u201C\\ \u201Cml.-\n\nhlxt RII\u2018IHW\n\nl\u0027 \\|l\u00AB\u0027\\\n\n\u002B\n\n\u201CHutu \\n mmlz\u2019fht\n\n\\Nlu\\\\u \u2018H \\\\\u2018\n\nHum,\n\n(\n\n \n",
+  "ExpectedText": "KRAMER GERMANY ART. NO 741126 SIZE 41 COLOUR BLACK DESCRIPTION STEEDS Smart III Winter PAIRS 6 ORDER NO. 000137263 CARTON NO. 744 / 812 BARCODE 4064547107376",
+  "ProcessingTimeMs": 871,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

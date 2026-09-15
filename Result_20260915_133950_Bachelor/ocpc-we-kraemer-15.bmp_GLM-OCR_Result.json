@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 35,
+  "CharacterErrorRateInPercent": 23.03,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nGERMANY\n\nArt. no. 740774\nSize 35\nColour BLACK\nDescription START II WINTER\nPcs 10\nOrder no. 000136987\nCarton no. 15641 2377\nBarcode",
+  "ExpectedText": "KRAEMER GERMANY Art. no. 740774 Size 35 Colour BLACK Description START II WINTER Pcs 10 Order no. 000136987 Carton no. 1564 / 2377 Barcode 4053222550750",
+  "ProcessingTimeMs": 150,
+  "InputTokens": 620,
+  "OutputTokens": 77,
+  "TotalTokens": 697
+}

@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 80,
+  "CharacterErrorRateInPercent": 38.65,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nGERMANY\n\nArt. no. 340244\nSize A-XS\nColour Black\nDescription EPIC PRO Back protector:STEEDS\nPcs 10\nOrder NO. 00013830\nCarton NO. 199\nBarcode\n54",
+  "ExpectedText": "KRAEMER GERMANY Art. no 340244 Size A-XS Colour Black Description EPIC PRO Back protector:STEEDS Pcs 10 Order NO. 000138380 Carton NO. 199 Barcode 4064547441807 340244 XS S STEEDS Max Protector Yest Epic PRO",
+  "ProcessingTimeMs": 529,
+  "InputTokens": 620,
+  "OutputTokens": 78,
+  "TotalTokens": 698
+}

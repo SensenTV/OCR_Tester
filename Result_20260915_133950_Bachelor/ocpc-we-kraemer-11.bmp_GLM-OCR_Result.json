@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 42,
+  "CharacterErrorRateInPercent": 31.11,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nGERMANY\n\nArt. no. 621604-S\nSize\nColour S\nDescription Bag\nPcs 15\nOrder no. 000133789\nCarton no. 44\nBarcode",
+  "ExpectedText": "KRAEMER GERMANY Art. no. 621604-S Size Colour S Description Bag Pcs 15 Order no. 000133789 Carton no. 41 Barcode 4064547334574 621604-S",
+  "ProcessingTimeMs": 948,
+  "InputTokens": 620,
+  "OutputTokens": 63,
+  "TotalTokens": 683
+}

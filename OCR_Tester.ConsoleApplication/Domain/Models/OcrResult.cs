@@ -19,6 +19,9 @@ namespace OCR_Tester.Domain.Models
         // Der vom OCR-Modell erkannte Text.
         public string RecognizedText { get; set; } = string.Empty;
 
+        // Der erwartete Text.
+        public string ExpectedText { get; set; } = string.Empty;
+
         // Verarbeitungszeit für das Bild in Millisekunden.
         public int ProcessingTimeMs { get; set; }
 

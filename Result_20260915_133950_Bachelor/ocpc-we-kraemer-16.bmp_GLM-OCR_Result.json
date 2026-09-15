@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 47,
+  "CharacterErrorRateInPercent": 30.32,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAMER\nGERMANY\n\nArt.no 653774\nSize S\nColour CF\nDescription FELIX B\u00DCHLER\njacket\nPcs 10\nOrder no. 000136455\nCarton no. C 154\nBarcode",
+  "ExpectedText": "KRAMER GERMANY Art.no 653774 Size S Colour CF Description FELIX B\u00DCHLER jacket Pcs 10 Order no. 000136455 Carton no. C 154 Barcode 653774 S CF 4 06457601638",
+  "ProcessingTimeMs": 72,
+  "InputTokens": 620,
+  "OutputTokens": 71,
+  "TotalTokens": 691
+}

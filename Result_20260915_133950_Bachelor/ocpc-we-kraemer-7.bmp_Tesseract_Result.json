@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 193,
+  "CharacterErrorRateInPercent": 90.19,
+  "ModelName": "Tesseract",
+  "RecognizedText": "770997136741\n\n\\]\nIlllllllllll\n\nllllll \u0022\n47\n\n4 0.45 \u201D111224\nM\n\n353791 s\n\n \n",
+  "ExpectedText": "Kr\u00E4mer Germanx Art. no 653791-M-S Size M Colour S=19-4006TPG Description FB ladies teddy fleece jacket with hood, 100% Polyester, knitted. Pcs 16 Order No. 000136741 Carton No. 37 Barcode 4 064547 611224 653791 M S",
+  "ProcessingTimeMs": 806,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

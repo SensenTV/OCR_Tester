@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 136,
+  "CharacterErrorRateInPercent": 99.27,
+  "ModelName": "Tesseract",
+  "RecognizedText": " \n",
+  "ExpectedText": "GERMANY Art.no:780345 M BR Size: M Color: Brown Description Helmet Pcs 9 Order no.138888 Carton no.446 Barcode: 780345 M BR 4064547526563",
+  "ProcessingTimeMs": 228,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 150,
+  "CharacterErrorRateInPercent": 94.94,
+  "ModelName": "Tesseract",
+  "RecognizedText": "    \n\n.;xjfununu\n\n\u2019 Mn\n\n \n\n   \n",
+  "ExpectedText": "KRAEMER GERMANY ART. NO 750719 SIZE S COLOUR MA DESCRIPTION Felix B\u00FChler Stretch Guertel PCS 100 ORDER NO. 135996 CARTON NO. 17 / 42 BARCODE 47451318 719 S MA",
+  "ProcessingTimeMs": 668,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

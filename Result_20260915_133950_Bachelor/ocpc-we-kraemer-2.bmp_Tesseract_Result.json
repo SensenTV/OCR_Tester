@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 114,
+  "CharacterErrorRateInPercent": 70.81,
+  "ModelName": "Tesseract",
+  "RecognizedText": "f\u00E4\u2018\\\u201C\u0022\u00276r\u0027d\u20ACr\u20195 7 1376866\u201C\n| 19\n\n\\\nMeasurement . 60(\u0027m .\\\u0027 30(\u0027m .\\\u0027 40(\u2018m (P) j\n\\\n\nItem # 44084l (\u2018 F7\n\nCarton \u00C4\n\n(\u2018nlnm ! m/cn Rose\n\n(\u0022uh\n\n\u201A\\in\n\nE A \\ \u2014( ode 4064547065430\n\nQuantit} 4\u2018) Pcs\n\n \n",
+  "ExpectedText": "CARTON SLIP Order # 138869 Carton # 119 Measurements 60Cm X 30Cm X 40Cm (P) Item # 440841 C FZ Colour Frozen Rose Size Cob EAN-Code 4064547065430 Quantity 40 Pcs",
+  "ProcessingTimeMs": 109,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

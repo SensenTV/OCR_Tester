@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 32,
+  "CharacterErrorRateInPercent": 16.16,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAMER\nGERMANY\n\nArt. No. 422661-135-TG\nSize 135CM\nColour TG=TG(19-4914 TPG)\n\nDescription TM FLEECE RUG\nECONOMIC 230GSM\nPOLAR FLEECE\n\nPCS 7\nOrder No. 000138490\n\nCarton No. SI-4015\n\nBarcode 4 064547 586317",
+  "ExpectedText": "KRAMER GERMANY Art. No. 422661-135-TG Size 135CM Colour TG=TG(19-4914 TPG) Description TM FLEECE RUG ECONOMIC 230GSM POLAR FLEECE PCS 7 Order No. 000138490 Carton No. SI-4015 Barcode 4 064547 586317",
+  "ProcessingTimeMs": 947,
+  "InputTokens": 620,
+  "OutputTokens": 129,
+  "TotalTokens": 749
+}

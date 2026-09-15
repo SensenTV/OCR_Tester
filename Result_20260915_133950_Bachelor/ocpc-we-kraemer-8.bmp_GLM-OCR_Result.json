@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 93,
+  "CharacterErrorRateInPercent": 37.05,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "Carton No: 7994\nMarka: GE/182\nFrom: KANFUW, India\nTo: Hamburry, Germany\nOrder No: Pecaty\u0027s CDk\nOur Product Code: Colour: Size: Qty:\n800134918 23062 F85 5409-09719 Black Full: 20\nFor Export Only [149/182]",
+  "ExpectedText": "Carton No: 7994 Marka:GE/182 Carton No. 7994 From: KANPUR., India 862 F SS Full 4064547574741 To: Hamburg, Germany Black Order No. Party\u0027s Code Our Product Code Colour Size Qty. 000134915 320862 F SS S409-597-19 Black Full 20 For Export Only [149/182]",
+  "ProcessingTimeMs": 520,
+  "InputTokens": 620,
+  "OutputTokens": 109,
+  "TotalTokens": 729
+}

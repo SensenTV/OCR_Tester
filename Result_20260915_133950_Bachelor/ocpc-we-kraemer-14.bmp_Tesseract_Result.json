@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 174,
+  "CharacterErrorRateInPercent": 99.43,
+  "ModelName": "Tesseract",
+  "RecognizedText": " \n",
+  "ExpectedText": "KRAMER GERMANY Art.no 653775 Size M Colour CF Description FELIX B\u00DCHLER padded vest with big collar Pcs 10 Order no. 000136559 Carton no. 1320 Barcode 653775 M CF 4064547601935",
+  "ProcessingTimeMs": 235,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

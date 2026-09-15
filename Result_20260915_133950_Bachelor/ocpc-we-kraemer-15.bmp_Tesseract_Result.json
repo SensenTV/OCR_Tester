@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 151,
+  "CharacterErrorRateInPercent": 99.34,
+  "ModelName": "Tesseract",
+  "RecognizedText": " \n",
+  "ExpectedText": "KRAEMER GERMANY Art. no. 740774 Size 35 Colour BLACK Description START II WINTER Pcs 10 Order no. 000136987 Carton no. 1564 / 2377 Barcode 4053222550750",
+  "ProcessingTimeMs": 237,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

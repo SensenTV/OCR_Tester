@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 30,
+  "CharacterErrorRateInPercent": 20.69,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAEMER\nItem no.: 741259\nName of item:STEEDS Winter Rider Midcut II\nColor: BLACK\nSize: 39#\nQty: 10 PAIRS\nCarton no. 10/184\nBarcode",
+  "ExpectedText": "KRAEMER Item no.: 741259 Name of item:STEEDS Winter Rider Midcut II Color: BLACK Size: 39# Qty: 10 PAIRS Carton no. 112/184 Barcode 4064547390518",
+  "ProcessingTimeMs": 974,
+  "InputTokens": 620,
+  "OutputTokens": 67,
+  "TotalTokens": 687
+}

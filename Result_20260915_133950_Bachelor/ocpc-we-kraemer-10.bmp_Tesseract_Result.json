@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 93,
+  "CharacterErrorRateInPercent": 64.14,
+  "ModelName": "Tesseract",
+  "RecognizedText": " \n\n\u201E \u0027 Name of item=STEEDS Winter Rider Midcut ll\nColor: BLACK\n\n \n",
+  "ExpectedText": "KRAEMER Item no.: 741259 Name of item:STEEDS Winter Rider Midcut II Color: BLACK Size: 39# Qty: 10 PAIRS Carton no. 112/184 Barcode 4064547390518",
+  "ProcessingTimeMs": 705,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

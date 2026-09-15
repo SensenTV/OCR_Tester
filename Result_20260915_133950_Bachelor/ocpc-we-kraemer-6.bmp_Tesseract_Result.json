@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 151,
+  "CharacterErrorRateInPercent": 95.57,
+  "ModelName": "Tesseract",
+  "RecognizedText": "     \n\nZNJITJEI\u00C4QUIIUMEM\n\n\\?\n\n \n",
+  "ExpectedText": "KRAMER GERMANY Art. no 231046 Size 3XL Colour NV Description SUGAR DOG DOG PARKA Pcs 20 Order NO. 000136926 Carton NO. Y39 Barcode 4064547346089 231046 3XL NV",
+  "ProcessingTimeMs": 360,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

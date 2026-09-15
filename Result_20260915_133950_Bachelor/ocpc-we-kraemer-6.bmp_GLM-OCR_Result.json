@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 37,
+  "CharacterErrorRateInPercent": 23.42,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "KRAMER\nGERMANY\n\nArt.no 231046\nSize 3XL\nColour NV\nDescription SUGAR DOG DOG\nPARKA\nPcs 20\nOrder no. 000136926\nCarton no. Y39\nBarcode\n\n4 106434 34608\n231046 3XL NV",
+  "ExpectedText": "KRAMER GERMANY Art. no 231046 Size 3XL Colour NV Description SUGAR DOG DOG PARKA Pcs 20 Order NO. 000136926 Carton NO. Y39 Barcode 4064547346089 231046 3XL NV",
+  "ProcessingTimeMs": 318,
+  "InputTokens": 620,
+  "OutputTokens": 100,
+  "TotalTokens": 720
+}

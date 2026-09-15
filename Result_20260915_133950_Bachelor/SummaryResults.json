@@ -1,0 +1,32 @@
+{
+  "Models": [
+    {
+      "ModelName": "GLM-OCR",
+      "TotalImagesProcessed": 16,
+      "TotalProcessingTimeMs": 8184,
+      "AverageProcessingTimeMs": 511,
+      "OverallCharacterErrorRate": 25.44,
+      "OverallCharacterErrors": 738,
+      "TotalInputTokens": 9920,
+      "TotalOutputTokens": 1404,
+      "GraphicsProcessingUnit": "Nvidia GeForce RTX 5080",
+      "VRAM": "16 GB",
+      "CPU": "AMD Ryzen 5 9600X",
+      "RAM": "32 GB"
+    },
+    {
+      "ModelName": "Tesseract",
+      "TotalImagesProcessed": 16,
+      "TotalProcessingTimeMs": 7143,
+      "AverageProcessingTimeMs": 446,
+      "OverallCharacterErrorRate": 87.29,
+      "OverallCharacterErrors": 2463,
+      "TotalInputTokens": 0,
+      "TotalOutputTokens": 0,
+      "GraphicsProcessingUnit": "",
+      "VRAM": "",
+      "CPU": "AMD Ryzen 7 7735U",
+      "RAM": "16 GB"
+    }
+  ]
+}

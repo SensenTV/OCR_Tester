@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 123,
+  "CharacterErrorRateInPercent": 62.12,
+  "ModelName": "Tesseract",
+  "RecognizedText": "TN FLEECE RUG\nDescription ECONOMIC 23OGSM\nF\u2018POLAR FLEECE\n\nPCS\n\u201AOrder N9. 000138490\n\nmm...\u201C \u201AISl-4O1l5\n\nBarcode \u201DMW\n! 4 06454 58631\u201C {\n\n \n",
+  "ExpectedText": "KRAMER GERMANY Art. No. 422661-135-TG Size 135CM Colour TG=TG(19-4914 TPG) Description TM FLEECE RUG ECONOMIC 230GSM POLAR FLEECE PCS 7 Order No. 000138490 Carton No. SI-4015 Barcode 4 064547 586317",
+  "ProcessingTimeMs": 786,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

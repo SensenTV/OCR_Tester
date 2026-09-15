@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 153,
+  "CharacterErrorRateInPercent": 99.35,
+  "ModelName": "Tesseract",
+  "RecognizedText": " \n",
+  "ExpectedText": "KRAEMER GERMANY Art. no 432443 S Size Colour S Description Horse Mane and Tall Brush Pcs 50 Order NO. 000138228 Carton NO. 27 of 30 Barcode 4064547402327\u003E",
+  "ProcessingTimeMs": 269,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

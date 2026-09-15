@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 142,
+  "CharacterErrorRateInPercent": 91.61,
+  "ModelName": "Tesseract",
+  "RecognizedText": "  \n \n\n \n \n\n* [ .\u0022 \u201D\n(U! 1, \u201C] w ;; IR\n\n \n",
+  "ExpectedText": "KRAMER GERMANY Art.no 653774 Size S Colour CF Description FELIX B\u00DCHLER jacket Pcs 10 Order no. 000136455 Carton no. C 154 Barcode 653774 S CF 4 06457601638",
+  "ProcessingTimeMs": 391,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

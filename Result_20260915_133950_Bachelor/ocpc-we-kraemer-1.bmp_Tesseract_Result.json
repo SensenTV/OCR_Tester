@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 202,
+  "CharacterErrorRateInPercent": 97.58,
+  "ModelName": "Tesseract",
+  "RecognizedText": "av.._\u00A2_.,.. . \\\n\n \n",
+  "ExpectedText": "KRAEMER GERMANY Art. no 340244 Size A-XS Colour Black Description EPIC PRO Back protector:STEEDS Pcs 10 Order NO. 000138380 Carton NO. 199 Barcode 4064547441807 340244 XS S STEEDS Max Protector Yest Epic PRO",
+  "ProcessingTimeMs": 370,
+  "InputTokens": 0,
+  "OutputTokens": 0,
+  "TotalTokens": 0
+}

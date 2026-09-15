@@ -1,0 +1,11 @@
+{
+  "CharacterErrorRate": 87,
+  "CharacterErrorRateInPercent": 28.06,
+  "ModelName": "GLM-OCR",
+  "RecognizedText": "Kr\u00E4mer Germany\nArt. No. 810673-M-S\nSize M\nColour S 19-4006 TF-X\nDescription\nFB ladies padded, long skirt with\n2-way vision zippir on one side, two\nhidden zee packels on front, long\nrafter \u002B wiltch zee packs on\nCB 100% Aylon woven\nPcs 25\nOrder No. 000132296\nCarton No. 606\nBarcode",
+  "ExpectedText": "Kr\u00E4mer Germany Art. No. 810673-M-S Size M Colour S 19-4006 TPX Description FB ladies padded riding skirt with 2-way vision zipper on one side, two hidden zip pockets on front, long riding slit with hidden zipper on CB 100% Nylon,woven. Pcs 25 Order No. 000132296 Carton No. 606 Barcode 4064547363215 810673 M S",
+  "ProcessingTimeMs": 488,
+  "InputTokens": 620,
+  "OutputTokens": 127,
+  "TotalTokens": 747
+}
