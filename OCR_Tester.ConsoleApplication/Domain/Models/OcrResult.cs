@@ -1,10 +1,13 @@
-﻿namespace OCR_Tester.Domain.Models
+﻿using System.Text.Json.Serialization;
+
+namespace OCR_Tester.Domain.Models
 {
     // Repräsentiert das Ergebnis einer OCR-Verarbeitung für ein einzelnes Bild.
     // Enthält den erkannten Text sowie Messwerte wie Verarbeitungszeit,
     // Tokenverbrauch und gegebenenfalls die berechneten Kosten.
     public class OcrResult
     {
+        [JsonIgnore]
         public SingleBenchmark SingleBenchmark { get; set; } = new();
 
         public int CharacterErrorRate => SingleBenchmark.CharacterErrorRate;
